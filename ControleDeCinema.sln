@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDeCinema.WebApp", "ControleDeCinema.WebApp\ControleDeCinema.WebApp.csproj", "{FDD6EBBC-AD7C-4376-8463-CF644FB8553F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ControleDeCinema.Dominio", "ControleDeCinema.Dominio", "{744A3E7B-F0EF-4226-8B6C-8417DB7C70DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDeCinema.Dominio", "ControleDeCinema.Dominio\ControleDeCinema.Dominio.csproj", "{52E9CBE2-E009-4404-9E72-3CB46349C99F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FDD6EBBC-AD7C-4376-8463-CF644FB8553F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDD6EBBC-AD7C-4376-8463-CF644FB8553F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDD6EBBC-AD7C-4376-8463-CF644FB8553F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDD6EBBC-AD7C-4376-8463-CF644FB8553F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52E9CBE2-E009-4404-9E72-3CB46349C99F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52E9CBE2-E009-4404-9E72-3CB46349C99F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52E9CBE2-E009-4404-9E72-3CB46349C99F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52E9CBE2-E009-4404-9E72-3CB46349C99F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{52E9CBE2-E009-4404-9E72-3CB46349C99F} = {744A3E7B-F0EF-4226-8B6C-8417DB7C70DF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4217AC38-0337-47A4-9842-81A73033F0ED}
+	EndGlobalSection
+EndGlobal
