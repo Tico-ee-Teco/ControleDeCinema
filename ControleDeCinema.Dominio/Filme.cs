@@ -7,9 +7,9 @@ namespace ControleDeCinema.Dominio
 {
     public class Filme
     {
-        public string Titulo;
+        public string Titulo ;
         public string Genero;
-        public Datetime Duracao;
+        public DateTime Duracao;
         private int Id;
         public string Classificacao;
     }
