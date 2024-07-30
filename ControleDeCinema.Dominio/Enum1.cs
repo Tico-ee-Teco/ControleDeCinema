@@ -5,10 +5,10 @@ using System.Text;
 
 namespace ControleDeCinema.Dominio
 {
-    public class Funcionario
+    public enum Enum1
     {
-        public string Nome;
-        public string CPF;
-        private int Id;
+        Inteira,
+        Meia,
+       
     }
 }

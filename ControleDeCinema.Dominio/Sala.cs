@@ -7,5 +7,8 @@ namespace ControleDeCinema.Dominio
 {
     public class Sala
     {
+        public int Capacidade;
+        public int NumeroAssentosDisponiveis;
+        private int Id;
     }
 }

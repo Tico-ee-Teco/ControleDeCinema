@@ -3,11 +3,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDeCinema.WebApp", "ControleDeCinema.WebApp\ControleDeCinema.WebApp.csproj", "{FDD6EBBC-AD7C-4376-8463-CF644FB8553F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControleDeCinema.WebApp", "ControleDeCinema.WebApp\ControleDeCinema.WebApp.csproj", "{FDD6EBBC-AD7C-4376-8463-CF644FB8553F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ControleDeCinema.Dominio", "ControleDeCinema.Dominio", "{744A3E7B-F0EF-4226-8B6C-8417DB7C70DF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dominio", "Dominio", "{744A3E7B-F0EF-4226-8B6C-8417DB7C70DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDeCinema.Dominio", "ControleDeCinema.Dominio\ControleDeCinema.Dominio.csproj", "{52E9CBE2-E009-4404-9E72-3CB46349C99F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControleDeCinema.Dominio", "ControleDeCinema.Dominio\ControleDeCinema.Dominio.csproj", "{52E9CBE2-E009-4404-9E72-3CB46349C99F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApp", "WebApp", "{6B1FAD00-3490-4B5B-924A-87A087EEA60A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{2A1C08A8-165C-48B1-8712-27A0DD68FDB8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControleDeCinema.Infra", "ControleDeCinema.Infra\ControleDeCinema.Infra.csproj", "{9552682A-E671-45E5-B1EB-2A1BB5078C56}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testes", "Testes", "{DFAD17A2-9994-498E-8B58-A977BD7C0A8D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testes Unidade", "Testes Unidade", "{894D1C76-C349-4A37-9FE5-0FC3B637A101}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testes Integracao", "Testes Integracao", "{1D84D22E-5B7C-4659-AB42-EB481C6B6755}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDeCinema.Testes.Unidade", "ControleDeCinema.Testes.Unidade\ControleDeCinema.Testes.Unidade.csproj", "{0D7E4754-587B-4672-A667-E96361E8DAFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDeCinema.Testes.Integracao", "ControleDeCinema.Testes.Integracao\ControleDeCinema.Testes.Integracao.csproj", "{5084662B-FEB5-4F14-AF09-BF56BE68DCF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,12 +39,30 @@ Global
 		{52E9CBE2-E009-4404-9E72-3CB46349C99F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52E9CBE2-E009-4404-9E72-3CB46349C99F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52E9CBE2-E009-4404-9E72-3CB46349C99F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9552682A-E671-45E5-B1EB-2A1BB5078C56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9552682A-E671-45E5-B1EB-2A1BB5078C56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9552682A-E671-45E5-B1EB-2A1BB5078C56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9552682A-E671-45E5-B1EB-2A1BB5078C56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D7E4754-587B-4672-A667-E96361E8DAFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D7E4754-587B-4672-A667-E96361E8DAFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D7E4754-587B-4672-A667-E96361E8DAFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D7E4754-587B-4672-A667-E96361E8DAFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5084662B-FEB5-4F14-AF09-BF56BE68DCF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5084662B-FEB5-4F14-AF09-BF56BE68DCF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5084662B-FEB5-4F14-AF09-BF56BE68DCF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5084662B-FEB5-4F14-AF09-BF56BE68DCF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{FDD6EBBC-AD7C-4376-8463-CF644FB8553F} = {6B1FAD00-3490-4B5B-924A-87A087EEA60A}
 		{52E9CBE2-E009-4404-9E72-3CB46349C99F} = {744A3E7B-F0EF-4226-8B6C-8417DB7C70DF}
+		{9552682A-E671-45E5-B1EB-2A1BB5078C56} = {2A1C08A8-165C-48B1-8712-27A0DD68FDB8}
+		{894D1C76-C349-4A37-9FE5-0FC3B637A101} = {DFAD17A2-9994-498E-8B58-A977BD7C0A8D}
+		{1D84D22E-5B7C-4659-AB42-EB481C6B6755} = {DFAD17A2-9994-498E-8B58-A977BD7C0A8D}
+		{0D7E4754-587B-4672-A667-E96361E8DAFD} = {894D1C76-C349-4A37-9FE5-0FC3B637A101}
+		{5084662B-FEB5-4F14-AF09-BF56BE68DCF8} = {1D84D22E-5B7C-4659-AB42-EB481C6B6755}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4217AC38-0337-47A4-9842-81A73033F0ED}

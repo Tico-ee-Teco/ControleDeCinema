@@ -5,10 +5,10 @@ using System.Text;
 
 namespace ControleDeCinema.Dominio
 {
-    public class Funcionario
+    public class Cliente
     {
+        public int Id;
         public string Nome;
         public string CPF;
-        private int Id;
     }
 }
