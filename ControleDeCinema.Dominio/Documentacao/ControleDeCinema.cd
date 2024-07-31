@@ -20,44 +20,46 @@
       <HashCode>AAACAAAIAAAAAAAAABAAAAAAAEAgABAAAAAAAAAAAAA=</HashCode>
       <FileName>Sessao.cs</FileName>
     </TypeIdentifier>
-    <ShowAsCollectionAssociation>
+    <ShowAsAssociation>
       <Field Name="Sala" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
       <Field Name="Filme" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="ControleDeCinema.Dominio.Funcionario">
-    <Position X="6.5" Y="4" Width="1.5" />
+    <Position X="6.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAACAACAAAAAAAAAQAAEAAAA=</HashCode>
       <FileName>Funcionario.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ControleDeCinema.Dominio.Ingresso">
-    <Position X="8.5" Y="1.75" Width="1.5" />
+    <Position X="5.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAQAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAQ=</HashCode>
+      <HashCode>AAACAAAAAAQQAAAAAACAAAAAAAAAAEAAAAAAAAAAAAQ=</HashCode>
       <FileName>Ingresso.cs</FileName>
     </TypeIdentifier>
-  </Class>
-  <Class Name="ControleDeCinema.Dominio.VendaIngresso">
-    <Position X="5.75" Y="0.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAQAAAAAAACAAAAAAAAAAEAAAAAAAAAABAA=</HashCode>
-      <FileName>VendaIngresso.cs</FileName>
-    </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="Funcionario" />
-      <Field Name="Ingresso" />
+      <Field Name="Tipo" />
       <Field Name="Sessao" />
+      <Field Name="Funcionario" />
       <Field Name="Cliente" />
     </ShowAsAssociation>
   </Class>
   <Class Name="ControleDeCinema.Dominio.Cliente">
-    <Position X="3.5" Y="4" Width="1.5" />
+    <Position X="3.25" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAEAAAA=</HashCode>
       <FileName>Cliente.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Enum Name="ControleDeCinema.Dominio.Tipo">
+    <Position X="8.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tipo.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

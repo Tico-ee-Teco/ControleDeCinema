@@ -7,9 +7,11 @@ namespace ControleDeCinema.Dominio
 {
     public class Ingresso
     {
-        public Enum Tipo;
+        public Tipo Tipo;
         public int Id;
-        private Sessao Sessao;
-        private VendaIngresso Venda;
+        public Sessao Sessao;
+        public VendaIngresso Venda;
+        public Funcionario Funcionario;
+        public Cliente Cliente;
     }
 }

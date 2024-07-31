@@ -10,5 +10,7 @@ namespace ControleDeCinema.Dominio
         public string Nome;
         public string CPF;
         private int Id;
+        public string Login;
+        public string Senha;
     }
 }
