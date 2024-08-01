@@ -1,4 +1,5 @@
 ﻿using ControleDeCinema.Dominio.Compartilhado;
+using ControleDeCinema.Dominio.ModuloGenero;
 
 namespace ControleDeCinema.Dominio.ModuloFilme
 {

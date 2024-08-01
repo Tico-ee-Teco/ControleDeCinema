@@ -1,8 +1,8 @@
 ﻿using ControleDeCinema.Dominio.Compartilhado;
 
-namespace ControleDeCinema.Dominio;
+namespace ControleDeCinema.Dominio.ModuloGenero;
 
-public class Genero : EntidadeBase  
+public class Genero : EntidadeBase
 {
     public string Nome { get; set; }
     public Genero() { }
@@ -23,7 +23,7 @@ public class Genero : EntidadeBase
 
         if (string.IsNullOrEmpty(Nome.Trim()))
             erros.Add("O campo \"Genero\" é obrigatório!");
-        
+
 
         return erros;
     }

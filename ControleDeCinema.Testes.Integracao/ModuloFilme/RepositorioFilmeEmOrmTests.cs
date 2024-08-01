@@ -1,6 +1,9 @@
 ﻿using ControleDeCinema.Dominio;
 using ControleDeCinema.Dominio.ModuloFilme;
+using ControleDeCinema.Dominio.ModuloGenero;
 using ControleDeCinema.Infra.Compartilhado;
+using ControleDeCinema.Infra.ModuloFilme;
+using ControleDeCinema.Infra.ModuloGenero;
 
 namespace ControleDeCinema.Testes.Integracao;
 
@@ -13,11 +16,11 @@ public class RepositorioFilmeEmOrmTests
         ControleDeCinemaDbContext dbContext = new ControleDeCinemaDbContext();
 
         var genero = new Genero("Ação");
-        RepositorioGeneroOrm repositorioGenero = new RepositorioGeneroOrm(dbContext);
+        RepositorioGeneroEmOrm repositorioGenero = new RepositorioGeneroEmOrm(dbContext);
         repositorioGenero.Inserir(genero);
 
         Filme filme = new Filme();
-        RepositorioFilmeOrm repositorioFilme = new RepositorioFilmeOrm(dbContext);
+        RepositorioFilmeEmOrm repositorioFilme = new RepositorioFilmeEmOrm(dbContext);
         repositorioFilme.Inserir(filme);
 
         Assert.IsTrue(filme.Id > 0);

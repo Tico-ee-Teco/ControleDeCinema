@@ -10,7 +10,7 @@ namespace ControleDeCinema.Dominio
         public Tipo Tipo;
         public int Id;
         public Sessao Sessao;
-        public VendaIngresso Venda;
+        
         public Funcionario Funcionario;
         public Cliente Cliente;
     }

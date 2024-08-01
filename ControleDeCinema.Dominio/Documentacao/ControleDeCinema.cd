@@ -21,7 +21,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="ControleDeCinema.Dominio.Funcionario">
-    <Position X="6.25" Y="3.5" Width="1.5" />
+    <Position X="8.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAACAACAAAAAAAAAQAAEAAAA=</HashCode>
       <FileName>Funcionario.cs</FileName>
@@ -41,7 +41,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="ControleDeCinema.Dominio.Cliente">
-    <Position X="3.25" Y="4" Width="1.5" />
+    <Position X="5.5" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAEAAAA=</HashCode>
       <FileName>Cliente.cs</FileName>
@@ -52,6 +52,16 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAEAAAAIAAAAAQQAAAAAAAAAgABA=</HashCode>
       <FileName>ModuloFilme\Filme.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Genero" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ControleDeCinema.Dominio.ModuloGenero.Genero">
+    <Position X="3" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAQAAAAAAAAEgAAA=</HashCode>
+      <FileName>ModuloGenero\Genero.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Enum Name="ControleDeCinema.Dominio.Tipo">

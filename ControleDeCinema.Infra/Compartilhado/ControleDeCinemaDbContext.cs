@@ -1,5 +1,5 @@
-﻿using ControleDeCinema.Dominio;
-using ControleDeCinema.Dominio.ModuloFilme;
+﻿using ControleDeCinema.Dominio.ModuloFilme;
+using ControleDeCinema.Dominio.ModuloGenero;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
