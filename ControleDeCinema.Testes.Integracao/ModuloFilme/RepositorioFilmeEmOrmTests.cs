@@ -18,8 +18,7 @@ public class RepositorioFilmeEmOrmTests
         Filme filme = new Filme();
         RepositorioFilmeOrm repositorioFilme = new RepositorioFilmeOrm(dbContext);
         repositorioFilme.Inserir(filme);
-        
+
         Assert.IsTrue(filme.Id > 0);
     }
-
 }
