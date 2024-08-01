@@ -22,9 +22,8 @@ public class Genero : EntidadeBase
         List<string> erros = new List<string>();
 
         if (string.IsNullOrEmpty(Nome.Trim()))
-        {
-            erros.Add("Nome é obrigatório");
-        }
+            erros.Add("O campo \"Genero\" é obrigatório!");
+        
 
         return erros;
     }

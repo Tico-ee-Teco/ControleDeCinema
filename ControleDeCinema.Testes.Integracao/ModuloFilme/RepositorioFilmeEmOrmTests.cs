@@ -1,4 +1,5 @@
 ﻿using ControleDeCinema.Dominio;
+using ControleDeCinema.Dominio.ModuloFilme;
 using ControleDeCinema.Infra.Compartilhado;
 
 namespace ControleDeCinema.Testes.Integracao;
