@@ -1,4 +1,5 @@
-﻿using ControleDeCinema.Infra.Compartilhado;
+﻿using ControleDeCinema.Dominio;
+using ControleDeCinema.Infra.Compartilhado;
 
 namespace ControleDeCinema.Testes.Integracao;
 
@@ -20,4 +21,5 @@ public class RepositorioFilmeEmOrmTests
         
         Assert.IsTrue(filme.Id > 0);
     }
+
 }
