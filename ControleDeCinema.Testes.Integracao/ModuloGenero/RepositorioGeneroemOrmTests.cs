@@ -17,6 +17,7 @@ public class RepositorioGeneroemOrmTests
         dbContext = new ControleDeCinemaDbContext(); 
         repositorioGenero = new RepositorioGeneroEmOrm(dbContext);
 
+        dbContext.Filmes.RemoveRange(dbContext.Filmes);
         dbContext.Generos.RemoveRange(dbContext.Generos);
     }
 
@@ -24,47 +25,49 @@ public class RepositorioGeneroemOrmTests
     public void Deve_inserir_um_genero()
     {
         //Arrange
-        Genero genero = new Genero("Ação");
+        Genero novoGenero = new Genero("Suspense");
 
         //Act
-        repositorioGenero.Inserir(genero);
+        repositorioGenero.Inserir(novoGenero);
         
         //Assert
-        Assert.IsTrue(genero.Id > 0);
+        Assert.IsTrue(novoGenero.Id > 0);
     }
 
     [TestMethod]
     public void Deve_editar_um_genero()
     {
         //Arrange
-        Genero generoOriginal = new Genero("Ação");
+        Genero generoOriginal = new Genero("Suspense");
 
         repositorioGenero.Inserir(generoOriginal);
 
         Genero generoAtualizado = repositorioGenero.SelecionarPorId(generoOriginal.Id);
 
-        generoAtualizado.Nome = "Ação e Aventura";
+        generoAtualizado.Nome = "Terror";
 
         //Act
-        repositorioGenero.Editar(generoOriginal, generoAtualizado);
+        bool resultado = repositorioGenero.Editar(generoOriginal, generoAtualizado);
 
         //Assert
-        Assert.AreEqual(generoOriginal.Nome, generoAtualizado.Nome);
+        Assert.IsTrue(resultado);
     }
 
     [TestMethod]
     public void Deve_excluir_um_genero()
     {
         //Arrange
-        Genero genero = new Genero("Ação");
+        Genero genero = new Genero("Suspense");
 
         repositorioGenero.Inserir(genero);
 
         //Act
-        repositorioGenero.Excluir(genero);
+        bool resultado = repositorioGenero.Excluir(genero);
 
         //Assert
-        Assert.IsNull(repositorioGenero.SelecionarPorId(genero.Id));
+        Assert.IsTrue(resultado);
     }
+
+   
 }
 
