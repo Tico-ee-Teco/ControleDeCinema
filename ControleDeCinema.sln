@@ -21,9 +21,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testes Unidade", "Testes Un
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testes Integracao", "Testes Integracao", "{1D84D22E-5B7C-4659-AB42-EB481C6B6755}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDeCinema.Testes.Unidade", "ControleDeCinema.Testes.Unidade\ControleDeCinema.Testes.Unidade.csproj", "{0D7E4754-587B-4672-A667-E96361E8DAFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControleDeCinema.Testes.Unidade", "ControleDeCinema.Testes.Unidade\ControleDeCinema.Testes.Unidade.csproj", "{0D7E4754-587B-4672-A667-E96361E8DAFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDeCinema.Testes.Integracao", "ControleDeCinema.Testes.Integracao\ControleDeCinema.Testes.Integracao.csproj", "{5084662B-FEB5-4F14-AF09-BF56BE68DCF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControleDeCinema.Testes.Integracao", "ControleDeCinema.Testes.Integracao\ControleDeCinema.Testes.Integracao.csproj", "{5084662B-FEB5-4F14-AF09-BF56BE68DCF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
