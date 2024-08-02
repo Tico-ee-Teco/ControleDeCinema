@@ -6,6 +6,6 @@
         bool Editar(TEntidade registroOriginal, TEntidade registroAtualizado);
         bool Excluir(TEntidade registro);
         TEntidade SelecionarPorId(int id);
-        List<TEntidade> SelecionarTudo();
+        List<TEntidade> SelecionarTodos();
     }
 }
