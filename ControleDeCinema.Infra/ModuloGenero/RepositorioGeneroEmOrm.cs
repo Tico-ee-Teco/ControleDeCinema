@@ -1,15 +1,20 @@
 ﻿using ControleDeCinema.Dominio.ModuloGenero;
 using ControleDeCinema.Infra.Compartilhado;
+using Microsoft.EntityFrameworkCore;
 
 namespace ControleDeCinema.Infra.ModuloGenero
 {
-    public class RepositorioGeneroEmOrm : IRepositorioGenero
+    public class RepositorioGeneroEmOrm : RepositorioBaseEmOrm<Genero>, IRepositorioGenero
     {
-        ControleDeCinemaDbContext dbContext;
-        public RepositorioGeneroEmOrm(ControleDeCinemaDbContext dbContext)
+        public RepositorioGeneroEmOrm(ControleDeCinemaDbContext dbContext) : base(dbContext)
         {
-            this.dbContext = dbContext;
         }
+
+        protected override DbSet<Genero> ObterRegistros()
+        {
+           return dbContext.Generos;
+        }
+
         public void Inserir(Genero registro)
         {
             dbContext.Generos.Add(registro);
@@ -17,14 +22,12 @@ namespace ControleDeCinema.Infra.ModuloGenero
             dbContext.SaveChanges();
         }
 
-        public bool Editar(Genero registroOriginal, Genero registroAtualizado)
+        public override bool Editar(Genero registroAtualizado)
         {
-           if(registroOriginal == null || registroAtualizado == null)
+           if(registroAtualizado == null)
                 return false;
 
-            registroOriginal.AtualizarInformacoes(registroAtualizado);
-
-            dbContext.Generos.Update(registroOriginal);
+            dbContext.Generos.Update(registroAtualizado);
 
             dbContext.SaveChanges();
 
@@ -45,12 +48,10 @@ namespace ControleDeCinema.Infra.ModuloGenero
 
         public Genero SelecionarPorId(int id)
         {
-            return dbContext.Generos.Find(id)!;
+            return dbContext.Generos
+                .FirstOrDefault(g => g.Id == id)!;
         }
 
-        public List<Genero> SelecionarTudo()
-        {
-            return dbContext.Generos.ToList();
-        }
+       
     }
 }
