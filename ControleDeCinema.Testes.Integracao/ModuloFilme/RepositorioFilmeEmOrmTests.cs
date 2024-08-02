@@ -125,7 +125,7 @@ public class RepositorioFilmeEmOrmTests
             repositorioFilme.Inserir(filme);
 
         //Act
-        List<Filme> filmesSelecionados = repositorioFilme.SelecionarTudo();
+        List<Filme> filmesSelecionados = repositorioFilme.SelecionarTodos();
 
         //Assert
         Assert.AreEqual(3, filmesSelecionados.Count);
