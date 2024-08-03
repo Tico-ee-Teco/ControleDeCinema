@@ -67,6 +67,31 @@ namespace ControleDeCinema.Infra.Compartilhado
                     .IsRequired()
                     .OnDelete(DeleteBehavior.Restrict);
             });
+
+            modelBuilder.Entity<Funcionario>(funcionarioBuilder =>
+            {
+                funcionarioBuilder.ToTable("TBFuncionario");
+
+                funcionarioBuilder.Property(f => f.Id)
+                    .IsRequired()
+                    .ValueGeneratedOnAdd();
+
+                funcionarioBuilder.Property(f => f.Nome)
+                    .IsRequired()
+                    .HasColumnType("varchar(200)");
+
+                funcionarioBuilder.Property(f => f.CPF)
+                    .IsRequired()
+                    .HasColumnType("varchar(11)");
+
+                funcionarioBuilder.Property(f => f.Login)
+                    .IsRequired()
+                    .HasColumnType("varchar(200)");
+
+                funcionarioBuilder.Property(f => f.Senha)
+                    .IsRequired()
+                    .HasColumnType("varchar(200)");
+            });
         }
     }
 }
