@@ -1,4 +1,5 @@
-﻿using ControleDeCinema.Dominio.ModuloFilme;
+﻿using ControleDeCinema.Dominio;
+using ControleDeCinema.Dominio.ModuloFilme;
 using ControleDeCinema.Dominio.ModuloGenero;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +10,7 @@ namespace ControleDeCinema.Infra.Compartilhado
     {
         public DbSet<Filme> Filmes { get; set; }
         public DbSet<Genero> Generos { get; set; }
+        public DbSet<Funcionario>Funcionarios { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
