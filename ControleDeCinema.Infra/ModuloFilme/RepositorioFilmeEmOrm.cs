@@ -4,30 +4,30 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ControleDeCinema.Infra.ModuloFilme
 {
-    public class RepositorioFilmeEmOrm : IRepositorioFilme
+    public class RepositorioFilmeEmOrm : RepositorioBaseEmOrm<Filme>, IRepositorioFilme
     { 
-        ControleDeCinemaDbContext dbContext;
-
-        public RepositorioFilmeEmOrm(ControleDeCinemaDbContext dbContext)
+        public RepositorioFilmeEmOrm(ControleDeCinemaDbContext dbContext) : base(dbContext)
         {
-            this.dbContext = dbContext;
         }
 
-       public void Inserir(Filme registro)
+        protected override DbSet<Filme> ObterRegistros()
+        {
+           return dbContext.Filmes;
+        }
+
+        public void Inserir(Filme registro)
        {
            dbContext.Filmes.Add(registro);
 
            dbContext.SaveChanges();
        }
 
-       public bool Editar(Filme registroOriginal, Filme registroAtualizado)
+       public override bool Editar(Filme registroAtualizado)
        {
-           if(registroOriginal == null || registroAtualizado == null)
+           if(registroAtualizado == null)
                return false;
 
-           registroOriginal.AtualizarInformacoes(registroAtualizado);
-
-           dbContext.Filmes.Update(registroOriginal);
+           dbContext.Filmes.Update(registroAtualizado);
 
            dbContext.SaveChanges();
 
@@ -48,7 +48,9 @@ namespace ControleDeCinema.Infra.ModuloFilme
 
        public Filme SelecionarPorId(int id)
        {
-           return dbContext.Filmes.Find(id)!;
+           return dbContext.Filmes
+               .Include(f => f.Genero)
+               .FirstOrDefault(F => F.Id == id);
        }
 
        public List<Filme> SelecionarTodos()

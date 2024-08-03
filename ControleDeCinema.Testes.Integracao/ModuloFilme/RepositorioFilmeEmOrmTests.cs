@@ -33,7 +33,7 @@ public class RepositorioFilmeEmOrmTests
 
         repositorioGenero.Inserir(genero);
 
-        Filme filme = new Filme("Fui e Ja Volto",genero,DateTime.MinValue, false);
+        Filme filme = new Filme("Fui e Ja Volto",genero,160, false);
 
         //Act
         repositorioFilme.Inserir(filme);
@@ -50,7 +50,7 @@ public class RepositorioFilmeEmOrmTests
 
         repositorioGenero.Inserir(genero);
 
-        Filme filmeOriginal = new Filme("Fui e Ja Volto",genero,DateTime.MinValue, false);
+        Filme filmeOriginal = new Filme("Fui e Ja Volto",genero,160, false);
 
         repositorioFilme.Inserir(filmeOriginal);
 
@@ -73,7 +73,7 @@ public class RepositorioFilmeEmOrmTests
 
         repositorioGenero.Inserir(genero);
 
-        Filme filme = new Filme("Fui e Ja Volto",genero,DateTime.MinValue, false);
+        Filme filme = new Filme("Fui e Ja Volto",genero,160, false);
 
         repositorioFilme.Inserir(filme);
 
@@ -94,7 +94,7 @@ public class RepositorioFilmeEmOrmTests
 
         repositorioGenero.Inserir(genero);
 
-        Filme filme = new Filme("Fui e Ja Volto",genero,DateTime.MinValue, false);
+        Filme filme = new Filme("Fui e Ja Volto",genero,160, false);
 
         repositorioFilme.Inserir(filme);
 
@@ -115,9 +115,9 @@ public class RepositorioFilmeEmOrmTests
 
         List<Filme> filmesParainseir =
         [
-            new Filme("Fui e Ja Volto",genero,DateTime.MinValue, false),
-            new Filme("Fui e Voltei",genero,DateTime.MinValue, false),
-            new Filme("Fui e Fiquei", genero, DateTime.MinValue, true)
+            new Filme("Fui e Ja Volto",genero,160, false),
+            new Filme("Fui e Voltei",genero,120, false),
+            new Filme("Fui e Fiquei", genero, 210, true)
 
         ];
 

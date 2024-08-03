@@ -1,12 +1,12 @@
-﻿@model InserirFilmeViewModel;
+﻿@model EditarFilmeViewModel
 @{
     Layout = "_Layout";
-    ViewBag.Title = "Inserir Filme";
+    ViewBag.Title = "Edição de Filme";
 }
 
 <div class="row mt-3">
     <div class="col-lg-6">
-        <form asp-action="Inserir">
+        <form asp-action="Editar">
             <div class="mt-2">
                 <label class="control-label">Filme:</label>
                 <input class="form-control" asp-for="Nome" />
@@ -20,11 +20,17 @@
                 </select>
                 <span class="text-danger my-1" asp-validation-for="IdGenero"></span>
             </div>
-            
+
             <div class="mt-2">
                 <label class="control-label">Duração:</label>
-                <input class="form-control" type="number" asp-for="Duracao" />
+                <input type="number" class="form-control" asp-for="Duracao" />
                 <span class="text-danger my-1" asp-validation-for="Duracao"></span>
+            </div>
+
+            <div class="mt-2">
+                <label class="control-label">Estreia:</label>
+                <input type="checkbox" asp-for="Estreia" />
+                <span class="text-danger my-1" asp-validation-for="Estreia"></span>
             </div>
 
             <div class="mt-2">

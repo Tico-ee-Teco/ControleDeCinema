@@ -7,13 +7,13 @@ namespace ControleDeCinema.Dominio.ModuloFilme
     {
         public string Titulo { get; set; }
         public Genero Genero { get; set; }
-        public DateTime Duracao { get; set; }
+        public int Duracao { get; set; }
         public bool Estreia { get; set; }
         public Filme()
         {
         }
 
-        public Filme(string titulo, Genero genero, DateTime duracao, bool estreia)
+        public Filme(string titulo, Genero genero, int duracao, bool estreia)
         {
             Titulo = titulo;
             Genero = genero;

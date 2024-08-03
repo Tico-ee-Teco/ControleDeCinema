@@ -52,7 +52,8 @@ namespace ControleDeCinema.Infra.Compartilhado
                     .HasColumnType("varchar(200)");
 
                 filmeBuilder.Property(f => f.Duracao)
-                    .HasColumnType("datetime2");
+                    .IsRequired()
+                    .HasColumnType("int");
 
                 filmeBuilder.Property(f => f.Estreia)
                     .IsRequired()
