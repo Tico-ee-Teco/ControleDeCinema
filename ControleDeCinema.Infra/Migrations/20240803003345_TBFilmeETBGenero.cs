@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ControleDeCinema.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class TBGeneroTBFilme : Migration
+    public partial class TBFilmeETBGenero : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

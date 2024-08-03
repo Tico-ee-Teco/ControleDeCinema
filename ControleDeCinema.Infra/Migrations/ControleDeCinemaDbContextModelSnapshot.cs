@@ -70,12 +70,17 @@ namespace ControleDeCinema.Infra.Migrations
             modelBuilder.Entity("ControleDeCinema.Dominio.ModuloFilme.Filme", b =>
                 {
                     b.HasOne("ControleDeCinema.Dominio.ModuloGenero.Genero", "Genero")
-                        .WithMany()
+                        .WithMany("Filmes")
                         .HasForeignKey("Genero_Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Genero");
+                });
+
+            modelBuilder.Entity("ControleDeCinema.Dominio.ModuloGenero.Genero", b =>
+                {
+                    b.Navigation("Filmes");
                 });
 #pragma warning restore 612, 618
         }
