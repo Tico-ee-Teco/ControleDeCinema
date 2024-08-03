@@ -59,7 +59,7 @@ namespace ControleDeCinema.Infra.Compartilhado
                     .HasColumnType("bit");
 
                 filmeBuilder.HasOne(f => f.Genero)
-                    .WithMany()
+                    .WithMany(g => g.Filmes)
                     .HasForeignKey("Genero_Id")
                     .IsRequired()
                     .OnDelete(DeleteBehavior.Restrict);
