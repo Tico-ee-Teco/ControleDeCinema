@@ -16,13 +16,14 @@
     @foreach (var filme in Model)
     {
         <div class="card col-md-5 col-lg-4 col-xl-3">
-
             <div class="card-body">
-
                 <div class="row row-cols-2">
-                    <label class="card-title fs-5 fw-semibold">Filme: @filme.Nome</label>
-                    <label class="card-title fs-5 fw-semibold">Gênero: @filme.Generos</label>
-                    <label class="card-title fs-5 fw-semibold">Duração: @filme.Duracao</label>
+                    <div class="col-6">
+                        <label class="card-title fs-6 fw-semibold d-block">Filme: @filme.Nome</label>
+                        <label class="card-title fs-6 fw-semibold d-block">Gênero: @filme.Generos</label>
+                        <label class="card-title fs-6 fw-semibold d-block">Duração: @filme.Duracao</label>
+
+                    </div>
 
                     <div class="text-end">
                         <a class="btn btn-secondary btn-sm" href="/filme/detalhes/@filme.Id">
@@ -40,7 +41,7 @@
                 </div>
 
                 <p class="card-subtitle fs-6"><strong>Id:</strong> [@filme.Id]</p>
-                <p class="card-subtitle fs-6"><strong>Status:</strong> @filme.Estreia</p>
+                
 
             </div>
         </div>
