@@ -1,5 +1,6 @@
 ﻿using ControleDeCinema.Dominio.ModuloFilme;
 using ControleDeCinema.Infra.Compartilhado;
+using Microsoft.EntityFrameworkCore;
 
 namespace ControleDeCinema.Infra.ModuloFilme
 {
@@ -50,9 +51,13 @@ namespace ControleDeCinema.Infra.ModuloFilme
            return dbContext.Filmes.Find(id)!;
        }
 
-       public List<Filme> SelecionarTudo()
+       public List<Filme> SelecionarTodos()
        {
-           return dbContext.Filmes.ToList();
-       }
+           return dbContext.Filmes
+               .Include(f => f.Genero)
+               .ToList();
+        }
+
+       
     }
 }

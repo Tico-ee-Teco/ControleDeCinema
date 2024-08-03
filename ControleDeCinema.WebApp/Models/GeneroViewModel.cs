@@ -8,15 +8,29 @@ namespace ControleDeCinema.WebApp.Models
         public string Nome { get; set; }
     }
 
+    public class EditarGeneroViewModel
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; }
+    }
+
+    public class ExcluirGeneroViewModel
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public IEnumerable<ListarFilmeGeneroViewModel> Filmes { get; set; }
+    }
+
     public class ListarGeneroViewModel
     {
         public int Id { get; set; }
         public string Nome { get; set; }
     }
 
-    public class EditarGeneroViewModel
+    public class ListarFilmeGeneroViewModel
     {
-        public int Id { get; set; }
-        public string Nome { get; set; }
+       public string Nome { get; set; }
     }
+
+   
 }

@@ -90,6 +90,45 @@ namespace ControleDeCinema.WebApp.Controllers
             return View("mensagens", notificacaoVm);
         }
 
+        public ViewResult Excluir(int id)
+        {
+            var db = new ControleDeCinemaDbContext();
+            var repositorioGenero = new RepositorioGeneroEmOrm(db);
+
+            var genero = repositorioGenero.SelecionarPorId(id);
+
+            var excluirGeneroVm = new ExcluirGeneroViewModel
+            {
+                Id = genero.Id,
+                Nome = genero.Nome,
+                Filmes = genero.Filmes
+                    .Select(f => new ListarFilmeGeneroViewModel {Nome = f.Titulo})
+            };
+
+            return View(excluirGeneroVm);
+        }
+
+        [HttpPost, ActionName("excluir")]
+        public ViewResult ExcluirConfirmado(int id)
+        {
+            var db = new ControleDeCinemaDbContext();
+            var repositorioGenero = new RepositorioGeneroEmOrm(db);
+
+            var genero = repositorioGenero.SelecionarPorId(id);
+
+            repositorioGenero.Excluir(genero);
+
+            HttpContext.Response.StatusCode = 200;
+
+            var notificacaoVm = new NotificacaoViewModel
+            {
+                Mensagem = $"O registro com o ID [{genero.Id}] foi excluído com sucesso!",
+                LinkRedirecionamento = "/genero/listar"
+            };
+
+            return View("mensagens", notificacaoVm);
+        }
+
         
     }
 
