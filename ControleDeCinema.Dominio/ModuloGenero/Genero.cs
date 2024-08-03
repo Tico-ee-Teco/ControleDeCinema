@@ -1,12 +1,18 @@
 ﻿using ControleDeCinema.Dominio.Compartilhado;
+using ControleDeCinema.Dominio.ModuloFilme;
 
 namespace ControleDeCinema.Dominio.ModuloGenero;
 
 public class Genero : EntidadeBase
 {
     public string Nome { get; set; }
-    public Genero() { }
-    public Genero(string nome)
+    public List<Filme> Filmes { get; set; }
+
+    public Genero()
+    {
+        Filmes = new List<Filme>();
+    }
+    public Genero(string nome) : this()
     {
         Nome = nome;
     }
