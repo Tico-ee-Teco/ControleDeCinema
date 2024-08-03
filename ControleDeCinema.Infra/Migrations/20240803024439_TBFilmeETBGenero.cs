@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -32,7 +31,7 @@ namespace ControleDeCinema.Infra.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Titulo = table.Column<string>(type: "varchar(200)", nullable: false),
                     Genero_Id = table.Column<int>(type: "int", nullable: false),
-                    Duracao = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Duracao = table.Column<int>(type: "int", nullable: false),
                     Estreia = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
