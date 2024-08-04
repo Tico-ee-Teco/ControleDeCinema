@@ -1,6 +1,7 @@
 ﻿using ControleDeCinema.Dominio;
 using ControleDeCinema.Dominio.ModuloFilme;
 using ControleDeCinema.Dominio.ModuloGenero;
+using ControleDeCinema.Dominio.ModulosSala;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -11,6 +12,7 @@ namespace ControleDeCinema.Infra.Compartilhado
         public DbSet<Filme> Filmes { get; set; }
         public DbSet<Genero> Generos { get; set; }
         public DbSet<Funcionario>Funcionarios { get; set; }
+        public DbSet<Sala> Salas { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -91,6 +93,23 @@ namespace ControleDeCinema.Infra.Compartilhado
                 funcionarioBuilder.Property(f => f.Senha)
                     .IsRequired()
                     .HasColumnType("varchar(200)");
+            });
+
+            modelBuilder.Entity<Sala>(salaBuilder =>
+            {
+                salaBuilder.ToTable("TBSala");
+
+                salaBuilder.Property(s => s.Id)
+                    .IsRequired()
+                    .ValueGeneratedOnAdd();
+
+                salaBuilder.Property(s => s.Nome)
+                    .IsRequired()
+                    .HasColumnType("varchar(200)");
+
+                salaBuilder.Property(s => s.Capacidade)
+                    .IsRequired()
+                    .HasColumnType("int");
             });
         }
     }
