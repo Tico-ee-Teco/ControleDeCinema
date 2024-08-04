@@ -3,6 +3,7 @@
 
     var filmeAtivo = caminho.StartsWith("/filme") ? "nav-link active" : "nav-link";
     var generoAtivo = caminho.StartsWith("/genero") ? "nav-link active" : "nav-link";
+    var funcionarioAtivo = caminho.StartsWith("/funcionario") ? "nav-link active" : "nav-link";
 }
 
 <!DOCTYPE html>
@@ -22,8 +23,8 @@
             <ul class="nav nav-pills d-grid d-md-flex justify-content-md-end">
                 <li class="nav-item"><a href="/filme/listar" class="@filmeAtivo">Filmes</a></li>
                 <li class="nav-item"><a href="/genero/listar" class="@generoAtivo">Gêneros</a></li>
-                @*<li class="nav-item"><a href="/produto/listar" class="@produtoAtivo">Produto</a></li>
-                <li class="nav-item"><a href="/conta/listar" class="@contaAtivo">Conta</a></li>*@
+                <li class="nav-item"><a href="/funcionario/listar" class="@funcionarioAtivo">Funcionário</a></li>
+                @* <li class="nav-item"><a href="/conta/listar" class="@contaAtivo">Conta</a></li>*@
             </ul>
         </header>
     </nav>

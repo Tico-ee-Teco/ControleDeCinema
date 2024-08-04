@@ -1,0 +1,50 @@
+﻿@model EditarFuncionarioViewModel;
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "Atualização de  Funcionário";
+}
+
+<div class="row mt-3">
+    <div class="col-lg-6">
+        <form class="d-grid gap-4" asp-action="Editar">
+            <input type="hidden" asp-for="Id" />
+            <div class="mt-2">
+                <label class="control-label fw-semibold">Nome:</label>
+                <input class="form-control" asp-for="Nome" />
+                <span class="text-danger my-1" asp-validation-for="Nome"></span>
+            </div>
+
+            <div class="mt-2">
+                <label class="control-label fw-semibold">Cpf:</label>
+                <input class="form-control" asp-for="CPF" />
+                <span class="text-danger my-1" asp-validation-for="CPF"></span>
+            </div>
+
+            <div class="mt-2">
+                <label class="control-label fw-semibold">Login:</label>
+                <input class="form-control" asp-for="Login" />
+                <span class="text-danger my-1" asp-validation-for="Login"></span>
+            </div>
+
+            <div class="mt-2">
+                <label class="control-label fw-semibold">Senha:</label>
+                <input class="form-control" asp-for="Senha" />
+                <span class="text-danger my-1" asp-validation-for="Senha"></span>
+            </div>
+
+            <div class="mt-2 d-grid gap-2 d-md-block">
+                <button class="btn btn-primary px-5">
+                    <i class="bi bi-floppy-fill me-1"></i>
+                    Gravar
+                </button>
+
+                <a class="btn btn-secondary px-5" href="/funcionario/listar">
+                    <i class="bi bi-arrow-return-left me-1"></i>
+                    Voltar
+                </a>
+
+            </div>
+        </form>
+    </div>
+</div>
+
