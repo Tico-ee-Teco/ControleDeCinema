@@ -66,4 +66,43 @@ public class RepositorioFuncionarioEmOrmTests
         //Assert
         Assert.IsNull(repositorioFuncionario.SelecionarPorId(funcionario.Id));
     }
+
+    [TestMethod]
+    public void Deve_selecionar_um_funcionario_por_id()
+    {
+        //Arrange
+        Funcionario funcionario = new Funcionario("Alice", "12345678900", "123456", "123456");
+
+        repositorioFuncionario.Inserir(funcionario);
+
+        //Act
+        Funcionario funcionarioSelecionado = repositorioFuncionario.SelecionarPorId(funcionario.Id);
+
+        //Assert
+        Assert.AreEqual(funcionario.Id, funcionarioSelecionado.Id);
+    }
+
+    [TestMethod]
+    public void Deve_selecionar_todos_os_funcionarios()
+    {
+        //Arrange
+        List<Funcionario> funcinariosParaInserir =
+        [
+            new Funcionario("Alice", "12345678900", "123456", "123456"),
+            new Funcionario("Bob", "12345678900", "123456", "123456")
+
+        ];
+
+        foreach (var f in funcinariosParaInserir)
+        {
+            repositorioFuncionario.Inserir(f);
+        }
+
+        //Act
+        List<Funcionario> funcionarios = repositorioFuncionario.SelecionarTodos();
+
+        //Assert
+        CollectionAssert.AreEqual(funcinariosParaInserir, funcionarios);
+    }
+
 }
