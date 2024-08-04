@@ -1,12 +1,12 @@
-﻿@model EditarFuncionarioViewModel
+﻿@model ExcluirFuncionarioViewModel;
 @{
     Layout = "_Layout";
-    ViewBag.Title = "Atualização de Funcionário";
+    ViewBag.Title = "Exclusão de Funcionário";
 }
 
 <div class="row mt-3">
     <div class="col-lg-6">
-        <form class="d-grid gap-4" asp-action="Editar">
+        <form class="d-grid gap-4" asp-action="Excluir">
             <input type="hidden" asp-for="Id" />
             <div class="mt-2">
                 <label class="control-label fw-semibold">Nome:</label>
@@ -32,17 +32,20 @@
                 <span class="text-danger my-1" asp-validation-for="Senha"></span>
             </div>
 
+            <p class="text-bg-danger p-3 rounded fs-5 mt-2">
+                Deseja realmente confirmar a exclusão? Não será possível recuperar os dados excluídos posteriormente.
+            </p>
+
             <div class="mt-2 d-grid gap-2 d-md-block">
-                <button class="btn btn-primary px-5">
-                    <i class="bi bi-floppy-fill me-1"></i>
-                    Gravar
+                <button class="btn btn-danger px-5">
+                    <i class="bi bi-trash me-1"></i>
+                    Excluir
                 </button>
 
                 <a class="btn btn-secondary px-5" href="/funcionario/listar">
                     <i class="bi bi-arrow-return-left me-1"></i>
                     Voltar
                 </a>
-
             </div>
         </form>
     </div>

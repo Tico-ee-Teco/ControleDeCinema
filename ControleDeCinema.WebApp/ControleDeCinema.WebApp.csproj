@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Funcionario\editar.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0-preview.6.24327.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -29,10 +25,6 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Views\Funcionario\editar.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Views\Funcionario\editar.cshtml" />
   </ItemGroup>
 
 </Project>

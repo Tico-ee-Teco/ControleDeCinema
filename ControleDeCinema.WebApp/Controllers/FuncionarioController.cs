@@ -69,6 +69,67 @@ namespace ControleDeCinema.WebApp.Controllers
 
             return View(editarFuncionarioVm);
         }
+
+        [HttpPost]
+        public ViewResult Editar(EditarFuncionarioViewModel editarFuncionarioVm)
+        {
+            var db = new ControleDeCinemaDbContext();
+            var repositorioFuncionario = new RepositorioFuncionarioEmOrm(db);
+
+            var funcionarioOriginal = repositorioFuncionario.SelecionarPorId(editarFuncionarioVm.Id);
+
+            funcionarioOriginal.Nome = editarFuncionarioVm.Nome;
+            funcionarioOriginal.CPF = editarFuncionarioVm.Cpf;
+            funcionarioOriginal.Login = editarFuncionarioVm.Login;
+            funcionarioOriginal.Senha = editarFuncionarioVm.Senha;
+
+            repositorioFuncionario.Editar(funcionarioOriginal);
+
+            var notificacaoVm = new NotificacaoViewModel
+            {
+                Mensagem = $"O registro com o ID [{funcionarioOriginal.Id}] foi editado com sucesso!",
+                LinkRedirecionamento = "/funcionario/listar"
+            };
+
+            return View("mensagens", notificacaoVm);
+        }
         
+        public ViewResult Excluir(int id)
+        {
+            var db = new ControleDeCinemaDbContext();
+            var repositorioFuncionario = new RepositorioFuncionarioEmOrm(db);
+
+            var funcionario = repositorioFuncionario.SelecionarPorId(id);
+
+            var excluirFuncionarioVm = new ExcluirFuncionarioViewModel()
+            {
+                Id = funcionario.Id,
+                Nome = funcionario.Nome,
+                Cpf = funcionario.CPF,
+                Login = funcionario.Login,
+                Senha = funcionario.Senha
+            };
+
+            return View(excluirFuncionarioVm);
+        }
+        
+        [HttpPost, ActionName("excluir")]
+        public ViewResult Excluirconfirmado(ExcluirFuncionarioViewModel excluirFuncionarioVm)
+        {
+            var db = new ControleDeCinemaDbContext();
+            var repositorioFuncionario = new RepositorioFuncionarioEmOrm(db);
+            
+            var funcionario = repositorioFuncionario.SelecionarPorId(excluirFuncionarioVm.Id);
+
+            repositorioFuncionario.Excluir(funcionario);
+
+            var notificacaoVm = new NotificacaoViewModel
+            {
+                Mensagem = $"O registro com o ID [{funcionario.Id}] foi excluido com sucesso!",
+                LinkRedirecionamento = "/funcionario/listar"
+            };
+
+            return View("mensagens", notificacaoVm);
+        }
     }
 }
