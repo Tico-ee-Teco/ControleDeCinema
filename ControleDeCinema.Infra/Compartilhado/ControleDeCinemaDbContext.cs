@@ -1,6 +1,7 @@
 ﻿using ControleDeCinema.Dominio;
 using ControleDeCinema.Dominio.ModuloFilme;
 using ControleDeCinema.Dominio.ModuloGenero;
+using ControleDeCinema.Dominio.ModuloSessao;
 using ControleDeCinema.Dominio.ModulosSala;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -11,8 +12,9 @@ namespace ControleDeCinema.Infra.Compartilhado
     {
         public DbSet<Filme> Filmes { get; set; }
         public DbSet<Genero> Generos { get; set; }
-        public DbSet<Funcionario>Funcionarios { get; set; }
+        public DbSet<Funcionario> Funcionarios { get; set; }
         public DbSet<Sala> Salas { get; set; }
+        public DbSet<Sessao> Sessoes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -103,13 +105,44 @@ namespace ControleDeCinema.Infra.Compartilhado
                     .IsRequired()
                     .ValueGeneratedOnAdd();
 
-                salaBuilder.Property(s => s.Nome)
+                salaBuilder.Property(s => s.Numero)
                     .IsRequired()
-                    .HasColumnType("varchar(200)");
+                    .HasColumnType("int");
 
                 salaBuilder.Property(s => s.Capacidade)
                     .IsRequired()
                     .HasColumnType("int");
+            });
+
+            modelBuilder.Entity<Sessao>(sessaoBuilder =>
+            {
+                sessaoBuilder.ToTable("TBSessao");
+
+                sessaoBuilder.Property(s => s.Id)
+                    .IsRequired()
+                    .ValueGeneratedOnAdd();
+
+                sessaoBuilder.Property(s => s.NumeroMaximoIngresso)
+                    .IsRequired()
+                    .HasColumnType("int");
+
+                sessaoBuilder.Property(s => s.Data)
+                    .IsRequired()
+                    .HasColumnType("datetime");
+
+                sessaoBuilder.HasOne(s => s.Sala)
+                    .WithMany(s => s.Sessoes)
+                    .HasForeignKey("Sala_Id")
+                    .IsRequired()
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                sessaoBuilder.HasOne(s => s.Filme)
+                    .WithMany(f => f.Sessoes)
+                    .HasForeignKey("Filme_Id")
+                    .IsRequired()
+                    .OnDelete(DeleteBehavior.Restrict);
+
+
             });
         }
     }

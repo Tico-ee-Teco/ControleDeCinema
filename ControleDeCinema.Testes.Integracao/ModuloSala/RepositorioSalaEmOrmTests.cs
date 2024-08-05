@@ -24,7 +24,7 @@ namespace ControleDeCinema.Testes.Integracao.ModuloSala
         public void Deve_Inserir_Sala()
         {
             // Arrange
-            var sala = new Sala("Sala 1", 100);
+            var sala = new Sala(1, 100);
 
             // Act
             repositorioSala.Inserir(sala);
@@ -32,7 +32,7 @@ namespace ControleDeCinema.Testes.Integracao.ModuloSala
             // Assert
             var salaInserida = dbContext.Salas.FirstOrDefault();
             Assert.IsNotNull(salaInserida);
-            Assert.AreEqual(sala.Nome, salaInserida.Nome);
+            Assert.AreEqual(sala.Numero, salaInserida.Numero);
             Assert.AreEqual(sala.Capacidade, salaInserida.Capacidade);
         }
 
@@ -40,13 +40,13 @@ namespace ControleDeCinema.Testes.Integracao.ModuloSala
         public void Deve_Editar_Sala()
         {
             // Arrange
-            Sala salaOriginal = new Sala("Sala 1", 100);
+            Sala salaOriginal = new Sala(1, 100);
 
             repositorioSala.Inserir(salaOriginal);
 
             Sala salaEditada = repositorioSala.SelecionarPorId(salaOriginal.Id);
 
-            salaEditada.Nome = "Sala 2";
+            salaEditada.Numero = 2;
             salaEditada.Capacidade = 200;
 
             // Act
@@ -55,7 +55,7 @@ namespace ControleDeCinema.Testes.Integracao.ModuloSala
             // Assert
             var salaEditadaNoBanco = dbContext.Salas.FirstOrDefault();
             Assert.IsNotNull(salaEditadaNoBanco);
-            Assert.AreEqual(salaEditada.Nome, salaEditadaNoBanco.Nome);
+            Assert.AreEqual(salaEditada.Numero, salaEditadaNoBanco.Numero);
             Assert.AreEqual(salaEditada.Capacidade, salaEditadaNoBanco.Capacidade);
         }
 
@@ -63,7 +63,7 @@ namespace ControleDeCinema.Testes.Integracao.ModuloSala
         public void Deve_Excluir_Sala()
         {
             // Arrange
-            Sala sala = new Sala("Sala 1", 100);
+            Sala sala = new Sala(1, 100);
 
             repositorioSala.Inserir(sala);
 
@@ -79,7 +79,7 @@ namespace ControleDeCinema.Testes.Integracao.ModuloSala
         public void Deve_Selecionar_Sala_Por_Id()
         {
             // Arrange
-            Sala sala = new Sala("Sala 1", 100);
+            Sala sala = new Sala(1, 100);
 
             repositorioSala.Inserir(sala);
 
@@ -89,7 +89,7 @@ namespace ControleDeCinema.Testes.Integracao.ModuloSala
             // Assert
             Assert.IsNotNull(salaSelecionada);
             Assert.AreEqual(sala.Id, salaSelecionada.Id);
-            Assert.AreEqual(sala.Nome, salaSelecionada.Nome);
+            Assert.AreEqual(sala.Numero, salaSelecionada.Numero);
             Assert.AreEqual(sala.Capacidade, salaSelecionada.Capacidade);
         }
 
@@ -97,8 +97,8 @@ namespace ControleDeCinema.Testes.Integracao.ModuloSala
         public void Deve_Selecionar_Todas_As_Salas()
         {
             // Arrange
-            Sala sala1 = new Sala("Sala 1", 100);
-            Sala sala2 = new Sala("Sala 2", 200);
+            Sala sala1 = new Sala(1, 100);
+            Sala sala2 = new Sala(2, 200);
 
             repositorioSala.Inserir(sala1);
             repositorioSala.Inserir(sala2);

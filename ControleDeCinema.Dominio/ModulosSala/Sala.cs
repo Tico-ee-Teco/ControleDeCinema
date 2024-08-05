@@ -1,24 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ControleDeCinema.Dominio.Compartilhado;
+﻿using ControleDeCinema.Dominio.Compartilhado;
+using ControleDeCinema.Dominio.ModuloSessao;
 
 namespace ControleDeCinema.Dominio.ModulosSala
 {
     public class Sala : EntidadeBase
     {
-        public string Nome;
-        public int Capacidade;
-        public int NumeroAssentosDisponiveis; // Quantidade de assentos disponíveis na sala
+        public int Numero { get; set; }
+        public int Capacidade { get; set;}
+        public int NumeroAssentosDisponiveis { get; set; } // Quantidade de assentos disponíveis na sala
+        public List<Sessao> Sessoes { get; set; } // Lista de sessões que ocorrem na sala
 
         public Sala()
         {
-            
+            Sessoes = new List<Sessao>();
         }
-        public Sala(string nome, int capacidade)
+        public Sala(int numero, int capacidade) : this ()
         {
-            Nome = nome;
+            Numero = numero;
             Capacidade = capacidade;
         }
 
@@ -26,7 +24,7 @@ namespace ControleDeCinema.Dominio.ModulosSala
         {
             Sala salaAtualizada = (Sala)registroAtualizado;
 
-            Nome = salaAtualizada.Nome;
+            Numero = salaAtualizada.Numero;
             Capacidade = salaAtualizada.Capacidade;
         }
 
@@ -34,8 +32,8 @@ namespace ControleDeCinema.Dominio.ModulosSala
         {
             List<string> erros = new List<string>();
 
-            if (string.IsNullOrEmpty(Nome.Trim()))
-                erros.Add("O campo \"Nome\" é obrigatório!");
+            if (Numero <= 0)
+                erros.Add("O campo \"Número\" deve ser maior que zero!");
 
             if (Capacidade <= 0)
                 erros.Add("O campo \"Capacidade\" deve ser maior que zero!");

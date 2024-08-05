@@ -19,7 +19,7 @@ namespace ControleDeCinema.WebApp.Controllers
                 .Select(s => new ListarSalaViewModel
                 {
                     Id = s.Id,
-                    Nome = s.Nome,
+                    Numero = s.Numero,
                     Capacidade = s.Capacidade,
                 });
 
@@ -37,7 +37,7 @@ namespace ControleDeCinema.WebApp.Controllers
             var db = new ControleDeCinemaDbContext();
             var repositorioSala = new RepositorioSalaEmOrm(db);
 
-            var sala = new Sala(inserirSalaVm.Nome, inserirSalaVm.Capacidade);
+            var sala = new Sala(inserirSalaVm.Numero, inserirSalaVm.Capacidade);
 
             repositorioSala.Inserir(sala);
 
@@ -62,7 +62,7 @@ namespace ControleDeCinema.WebApp.Controllers
             var editarSalaVm = new EditarSalaViewModel
             {
                 Id = sala.Id,
-                Nome = sala.Nome,
+                Numero = sala.Numero,
                 Capacidade = sala.Capacidade,
             };
 
@@ -77,7 +77,7 @@ namespace ControleDeCinema.WebApp.Controllers
 
             var salaOriginal = repositorioSala.SelecionarPorId(editarSalaVm.Id);
 
-            salaOriginal.Nome = editarSalaVm.Nome;
+            salaOriginal.Numero = editarSalaVm.Numero;
             salaOriginal.Capacidade = editarSalaVm.Capacidade;
 
             repositorioSala.Editar(salaOriginal);
@@ -103,7 +103,7 @@ namespace ControleDeCinema.WebApp.Controllers
             var excluirSalaVm = new ExcluirSalaViewModel
             {
                 Id = sala.Id,
-                Nome = sala.Nome,
+                Numero = sala.Numero,
                 Capacidade = sala.Capacidade,
             };
 

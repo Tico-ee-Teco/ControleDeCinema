@@ -1,44 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="ControleDeCinema.Dominio.Sala">
-    <Position X="0.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAABAAQAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Sala.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="ControleDeCinema.Dominio.Sessao">
-    <Position X="3.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAIAAAAAAAAABAAAAAAAEAgABAAAAAAAAAAAAA=</HashCode>
-      <FileName>Sessao.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="Sala" />
-    </ShowAsAssociation>
-    <ShowAsCollectionAssociation>
-      <Field Name="Filme" />
-    </ShowAsCollectionAssociation>
-  </Class>
   <Class Name="ControleDeCinema.Dominio.Funcionario">
-    <Position X="8.25" Y="3.5" Width="1.5" />
+    <Position X="8" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAACAACAAAAAAAAAQAAEAAAA=</HashCode>
-      <FileName>Funcionario.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAACAAAQAAAAAQAAEgAAA=</HashCode>
+      <FileName>ModuloFuncionario\Funcionario.cs</FileName>
     </TypeIdentifier>
-  </Class>
-  <Class Name="ControleDeCinema.Dominio.Ingresso">
-    <Position X="5.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAQQAAAAAACAAAAAAAAAAEAAAAAAAAAAAAQ=</HashCode>
-      <FileName>Ingresso.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="Tipo" />
-      <Field Name="Sessao" />
-      <Field Name="Funcionario" />
-      <Field Name="Cliente" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="ControleDeCinema.Dominio.Cliente">
     <Position X="5.5" Y="4" Width="1.5" />
@@ -58,18 +25,18 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="ControleDeCinema.Dominio.ModuloGenero.Genero">
-    <Position X="3" Y="3" Width="1.5" />
+    <Position X="2.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAQAAAAAAAAEgAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAgAQAAAAAAAAEgAAA=</HashCode>
       <FileName>ModuloGenero\Genero.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Enum Name="ControleDeCinema.Dominio.Tipo">
-    <Position X="8.5" Y="0.75" Width="1.5" />
+  <Class Name="ControleDeCinema.Dominio.ModulosSala.Sala">
+    <Position X="2.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Tipo.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAQAAAAQAAAAAAAAEgAAA=</HashCode>
+      <FileName>ModulosSala\Sala.cs</FileName>
     </TypeIdentifier>
-  </Enum>
+  </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
