@@ -1,17 +1,23 @@
 ﻿using ControleDeCinema.Dominio.Compartilhado;
+using ControleDeCinema.Dominio.ModuloSessao;
 
 namespace ControleDeCinema.Dominio;
 
 public class Funcionario : EntidadeBase
 {
-    public string Nome;
-    public string CPF;
-    public string Login;
-    public string Senha;
+    public string Nome { get; set; }
+    public string CPF { get; set; }
+    public string Login { get; set; }
+    public string Senha { get; set; }
 
-    public Funcionario() { }
+    public List<Ingresso> Ingressos { get; set; }
 
-    public Funcionario(string nome, string cpf, string login, string senha)
+    public Funcionario()
+    {
+        Ingressos = new List<Ingresso>();
+    }
+
+    public Funcionario(string nome, string cpf, string login, string senha) : this()
     {
         Nome = nome;
         CPF = cpf;
