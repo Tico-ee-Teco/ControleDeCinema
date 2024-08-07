@@ -1,0 +1,27 @@
+﻿@model VendaIngressoViewModel
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "Venda de Ingressos";
+}
+
+<div class="row mt-3">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Filme: @Model.Filme</h3>
+                <p class="card-text"><strong>Sala:</strong> @Model.Sala</p>
+                <p class="card-text"><strong>Data e Hora:</strong> @Model.Data.ToString("dd/MM/yyyy HH:mm")</p>
+
+                <form asp-action="Ingresso">
+                    <div class="form-group">
+                        <label for="quantidadeIngressos">Quantidade de Ingressos</label>
+                        <input type="number" class="form-control" id="quantidadeIngressos" asp-for="QuantidadeIngressos" />
+                        <p class="card-subtitle fs-6"><strong>Entrada:</strong>meiaentrada</p>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-3">Confirmar Venda</button>
+                    <a href="/sessao/detalhes" class="btn btn-info">Voltar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -5,6 +5,7 @@
     var generoAtivo = caminho.StartsWith("/genero") ? "nav-link active" : "nav-link";
     var funcionarioAtivo = caminho.StartsWith("/funcionario") ? "nav-link active" : "nav-link";
     var salaAtivo = caminho.StartsWith("/sala") ? "nav-link active" : "nav-link";
+    var sessaoAtivo = caminho.StartsWith("/sessao") ? "nav-link active" : "nav-link";
 }
 
 <!DOCTYPE html>
@@ -26,6 +27,7 @@
                 <li class="nav-item"><a href="/genero/listar" class="@generoAtivo">Gêneros</a></li>
                 <li class="nav-item"><a href="/funcionario/listar" class="@funcionarioAtivo">Funcionário</a></li>
                 <li class="nav-item"><a href="/sala/listar" class="@salaAtivo">Sala</a></li>
+                <li class="nav-item"><a href="/sessao/listar" class="@sessaoAtivo">Sessão</a></li>
             </ul>
         </header>
     </nav>

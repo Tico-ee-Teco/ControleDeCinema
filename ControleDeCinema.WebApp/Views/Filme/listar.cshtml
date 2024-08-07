@@ -12,7 +12,7 @@
     </a>
 </div>
 
-<div class="row gap-3 mt-3 p-2">
+<div class="row gap-3 mt-2 p-2">
     @foreach (var filme in Model)
     {
         <div class="card col-md-5 col-lg-4 col-xl-3">
@@ -20,7 +20,7 @@
                 <div class="row row-cols-2">
                     <div class="col-6">
                         <label class="card-title fs-6 fw-semibold d-block">Filme: @filme.Nome</label>
-                        <label class="card-title fs-6 fw-semibold d-block">Gênero: @filme.Generos</label>
+                        <label class="card-title fs-6 fw-semibold d-block">Gênero: @filme.Genero</label>
                         <label class="card-title fs-6 fw-semibold d-block">Duração: @filme.Duracao</label>
 
                     </div>

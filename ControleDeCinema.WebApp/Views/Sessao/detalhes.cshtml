@@ -1,0 +1,21 @@
+﻿@model DetalhesSessaoViewModel
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "Detalhes da Sessão";
+}
+
+<div class="row mt-3">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Filme: @Model.Filme</h3>
+                <p class="card-text"><strong>Gênero:</strong> @Model.Genero</p>
+                <p class="card-text"><strong>Sala:</strong> @Model.Sala</p>
+                <p class="card-text"><strong>Data e Hora:</strong> @Model.Data.ToString("dd/MM/yyyy HH:mm")</p>
+                <p class="card-text"><strong>Ingressos Disponíveis:</strong> @Model.NumeroMaximoIngresso</p>
+                <a href="/sessao/listar" class="btn btn-info">Voltar</a>
+                <a href="/venda/ingresso/@Model.Id" class="btn btn-success">Vender Ingressos</a>
+            </div>
+        </div>
+    </div>
+</div>

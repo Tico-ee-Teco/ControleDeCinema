@@ -1,0 +1,40 @@
+﻿@model EditarSessaoViewModel
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "Editar Sessão";
+}
+
+<div class="row mt-3">
+    <div class="col-lg-6">
+        <form asp-action="Editar">
+            <div class="mt-2">
+                <label class="control-label">Filme:</label>
+                <input class="form-control" asp-for="NomeFilme"/>
+                <span class="text-danger my-1" asp-validation-for="NomeFilme"></span>
+            </div>
+
+            <div class="mt-2">
+                <label class="control-label">Sala:</label>
+                <input class="form-control" asp-for="Sala" />
+                <span class="text-danger my-1" asp-validation-for="Sala"></span>
+            </div>
+
+            <div class="mt-2">
+                <label class="control-label">Data:</label>
+                <input class="form-control" asp-for="Data" />
+                <span class="text-danger my-1" asp-validation-for="Data"></span>
+            </div>
+
+            <div class="mt-2">
+                <label class="control-label">Capacidade:</label>
+                <input type="form-control" asp-for="NumeroMaximoIngresso" />
+                <span class="text-danger my-1" asp-validation-for="NumeroMaximoIngresso"></span>
+            </div>
+
+            <div class="mt-2">
+                <button class="btn btn-primary">Gravar</button>
+                <a href="/sessao/listar" class="btn btn-info">Voltar</a>
+            </div>
+        </form>
+    </div>
+</div>

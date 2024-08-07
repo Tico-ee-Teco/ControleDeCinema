@@ -1,0 +1,45 @@
+﻿@model ExcluirSessaoViewModel;
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "Exclusão de Sessão";
+}
+
+<div class="row mt-3">
+    <div class="col-lg-6">
+        <form asp-action="Excluir">
+            <div class="mt-2">
+                <label class="control-label">Filme:</label>
+                <input class="form-control" asp-for="Filme" />
+                <span class="text-danger my-1" asp-validation-for="Filme"></span>
+            </div>
+
+            <div class="mt-2">
+                <label class="control-label">Sala:</label>
+                <input class="form-control" asp-for="Sala" />
+                <span class="text-danger my-1" asp-validation-for="Sala"></span>
+            </div>
+
+            <div class="mt-2">
+                <label class="control-label">Data:</label>
+                <input class="form-control" asp-for="Data" />
+                <span class="text-danger my-1" asp-validation-for="Data"></span>
+            </div>
+
+            <div class="mt-2">
+                <label class="control-label">Capacidade:</label>
+                <input class="form-control" asp-for="NumeroMaximoIngresso" />
+                <span class="text-danger my-1" asp-validation-for="NumeroMaximoIngresso"></span>
+            </div>
+            
+            <p class="text-bg-danger p-3 rounded fs-5 mt-2">
+                Deseja realmente confirmar a exclusão? Não será possível recuperar os dados excluídos posteriormente.
+            </p>
+
+            <div class="mt-2">
+                <button class="btn btn-primary">Gravar</button>
+                <a href="/sessao/listar" class="btn btn-info">Voltar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
