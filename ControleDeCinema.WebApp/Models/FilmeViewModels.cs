@@ -6,7 +6,8 @@ namespace ControleDeCinema.WebApp.Models
     {
         public int Id { get; set; }
         public string Nome { get; set; }
-        public IEnumerable<GeneroFilmeViewModel> Generos { get; set; }
+        public string Genero { get; set; }
+        //public IEnumerable<GeneroFilmeViewModel> Generos { get; set; }
         public int Duracao { get; set; }
         public bool Estreia { get; set; }
 
