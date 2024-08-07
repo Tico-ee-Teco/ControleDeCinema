@@ -10,6 +10,7 @@ namespace ControleDeCinema.Dominio.ModuloSessao
         public DateTime Data { get; set; }
         public Sala Sala { get; set; }
         public Filme Filme { get; set; }
+        public IEnumerable<Ingresso>? Ingressos { get; set; }
 
         public Sessao()
         {
