@@ -15,6 +15,7 @@ namespace ControleDeCinema.Infra.Compartilhado
         public DbSet<Funcionario> Funcionarios { get; set; }
         public DbSet<Sala> Salas { get; set; }
         public DbSet<Sessao> Sessoes { get; set; }
+        public DbSet<Ingresso> Ingressos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -141,8 +142,23 @@ namespace ControleDeCinema.Infra.Compartilhado
                     .HasForeignKey("Filme_Id")
                     .IsRequired()
                     .OnDelete(DeleteBehavior.Restrict);
+            });
 
+            modelBuilder.Entity<Ingresso>(ingressoBuilder =>
+            {
+                ingressoBuilder.ToTable("TBIngresso");
 
+                ingressoBuilder.Property(i => i.Id)
+                    .IsRequired()
+                    .ValueGeneratedOnAdd();
+
+                ingressoBuilder.Property(i => i.MeiaEntrada)
+                    .IsRequired()
+                    .HasColumnType("bit");
+
+               ingressoBuilder.Property(i => i.NumeroAssento)
+                    .IsRequired()
+                    .HasColumnType("int");
             });
         }
     }
