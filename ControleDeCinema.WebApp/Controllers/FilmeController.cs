@@ -1,5 +1,4 @@
 ﻿using ControleDeCinema.Dominio.ModuloFilme;
-using ControleDeCinema.Dominio.ModuloGenero;
 using ControleDeCinema.Infra.Compartilhado;
 using ControleDeCinema.Infra.ModuloFilme;
 using ControleDeCinema.Infra.ModuloGenero;
@@ -23,6 +22,7 @@ namespace ControleDeCinema.WebApp.Controllers
                 {
                     Id = f.Id,
                     Nome = f.Titulo,
+                    Genero = f.Genero.Nome,
                     Duracao = f.Duracao,
                     Estreia = f.Estreia,
                 });
