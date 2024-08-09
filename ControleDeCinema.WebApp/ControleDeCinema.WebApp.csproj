@@ -27,4 +27,8 @@
     <_ContentIncludedByDefault Remove="Views\Funcionario\editar.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\img\" />
+  </ItemGroup>
+
 </Project>
