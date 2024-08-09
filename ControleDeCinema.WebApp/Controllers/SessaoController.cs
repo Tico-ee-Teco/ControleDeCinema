@@ -222,16 +222,16 @@ namespace ControleDeCinema.WebApp.Controllers
             return View(detalhesSessaoVm);
         }
 
-        public ViewResult Ingresso(int sessaoId)
+        public ViewResult Ingresso(int id)
         {
             var db = new ControleDeCinemaDbContext();
             var repositorioSessao = new RepositorioSessaoEmOrm(db);
 
-            var sessao = repositorioSessao.SelecionarPorId(sessaoId);
+            var sessao = repositorioSessao.SelecionarPorId(id);
 
             var vendaIngressoVm = new VendaIngressoViewModel
             {
-                SessaoId = sessao.Id,
+                Id = sessao.Id,
                 Filme = sessao.Filme.Titulo,
                 Sala = sessao.Sala.Numero,
                 Data = sessao.Data,

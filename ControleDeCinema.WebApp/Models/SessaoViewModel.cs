@@ -65,7 +65,7 @@ namespace ControleDeCinema.WebApp.Models
 
     public class VendaIngressoViewModel
     {
-        public int SessaoId { get; set; }
+        public int Id { get; set; }
         public string Filme { get; set; }
         public int Sala { get; set; }
         public DateTime Data { get; set; }
