@@ -22,9 +22,15 @@ public class MapeadorIngressoEmOrm : IEntityTypeConfiguration<Ingresso>
             .IsRequired()
             .HasColumnType("int");
 
-        iBuilder.HasData(ObterRegistrosPadrao());
+        iBuilder.HasOne(i => i.Usuario)
+            .WithMany()
+            .HasForeignKey("Usuario_Id")
+            .IsRequired()
+            .OnDelete(DeleteBehavior.NoAction);
+
+        //fBuilder.HasData(ObterRegistrosPadrao());
     }
-    
+
     //populando tabela no banco
     private object[] ObterRegistrosPadrao()
     {

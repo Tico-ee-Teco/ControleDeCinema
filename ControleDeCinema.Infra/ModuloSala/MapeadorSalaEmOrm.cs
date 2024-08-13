@@ -22,7 +22,13 @@ public class MapeadorSalaEmOrm : IEntityTypeConfiguration<Sala>
             .IsRequired()
             .HasColumnType("int");
 
-        sBuilder.HasData(ObterRegistrosPadrao());
+        sBuilder.HasOne(s => s.Usuario)
+            .WithMany()
+            .HasForeignKey("Usuario_Id")
+            .IsRequired()
+            .OnDelete(DeleteBehavior.NoAction);
+
+        //fBuilder.HasData(ObterRegistrosPadrao());
     }
 
     //criando dados para iniciar o projeto com a tabela populada

@@ -1,4 +1,5 @@
 ﻿using ControleDeCinema.Dominio.ModuloFilme;
+using ControleDeCinema.Dominio.ModuloUsuario;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -32,7 +33,13 @@ public class MapeadorFilmeEmOrm : IEntityTypeConfiguration<Filme>
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
 
-        fBuilder.HasData(ObterRegistrosPadrao());
+        fBuilder.HasOne(f => f.Usuario)
+            .WithMany()
+            .HasForeignKey("Usuario_Id")
+            .IsRequired()
+            .OnDelete(DeleteBehavior.NoAction);
+
+        //fBuilder.HasData(ObterRegistrosPadrao());
     }
     
     //populando dados no banco

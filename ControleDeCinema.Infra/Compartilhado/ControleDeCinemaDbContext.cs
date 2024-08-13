@@ -3,17 +3,19 @@ using ControleDeCinema.Dominio.ModuloFilme;
 using ControleDeCinema.Dominio.ModuloGenero;
 using ControleDeCinema.Dominio.ModuloSessao;
 using ControleDeCinema.Dominio.ModulosSala;
+using ControleDeCinema.Dominio.ModuloUsuario;
 using ControleDeCinema.Infra.ModuloFilme;
 using ControleDeCinema.Infra.ModuloFuncionario;
 using ControleDeCinema.Infra.ModuloGenero;
 using ControleDeCinema.Infra.ModuloSala;
 using ControleDeCinema.Infra.ModuloSessao;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace ControleDeCinema.Infra.Compartilhado
 {
-    public class ControleDeCinemaDbContext : DbContext
+    public class ControleDeCinemaDbContext : IdentityDbContext<Usuario, Perfil, int>
     {
         public DbSet<Filme> Filmes { get; set; }
         public DbSet<Genero> Generos { get; set; }

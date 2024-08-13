@@ -30,9 +30,15 @@ public class MapeadorFuncionarioEmOrm : IEntityTypeConfiguration<Funcionario>
             .IsRequired()
             .HasColumnType("varchar(200)");
 
-        fuBuilder.HasData(ObterRegistrosPadrao());
+        fuBuilder.HasOne(f => f.Usuario)
+            .WithMany()
+            .HasForeignKey("Usuario_Id")
+            .IsRequired()
+            .OnDelete(DeleteBehavior.NoAction);
+
+        //fBuilder.HasData(ObterRegistrosPadrao());
     }
-    
+
     //populando dados no banco
     private object[] ObterRegistrosPadrao()
     {
