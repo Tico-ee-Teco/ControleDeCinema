@@ -6,20 +6,21 @@ namespace ControleDeCinema.Dominio.ModuloSessao
 {
     public class Sessao : EntidadeBase
     {
-        public int NumeroMaximoIngresso { get; set; }
+        public int NumeroMaximoIngressos { get; set; }
         public DateTime Data { get; set; }
         public Sala Sala { get; set; }
         public Filme Filme { get; set; }
-        public IEnumerable<Ingresso>? Ingressos { get; set; }
+        public bool Encerrada { get; set; }
+        public List<Ingresso> Ingressos { get; set; }
 
         public Sessao()
         {
-            
+            Ingressos = new List<Ingresso>();
         }
 
-        public Sessao(int numeroMaximoIngresso, DateTime data, Sala sala, Filme filme)
+        public Sessao(int numeroMaximoIngressos, DateTime data, Sala sala, Filme filme): this()
         {
-            NumeroMaximoIngresso = numeroMaximoIngresso;
+            NumeroMaximoIngressos = numeroMaximoIngressos;
             Data = data;
             Sala = sala;
             Filme = filme;
@@ -30,7 +31,7 @@ namespace ControleDeCinema.Dominio.ModuloSessao
         {
             Sessao sessaoAtualizada = (Sessao)registroAtualizado;
 
-            NumeroMaximoIngresso = sessaoAtualizada.NumeroMaximoIngresso;
+            NumeroMaximoIngressos = sessaoAtualizada.NumeroMaximoIngressos;
             Data = sessaoAtualizada.Data;
             Sala = sessaoAtualizada.Sala;
             Filme = sessaoAtualizada.Filme;
@@ -40,7 +41,7 @@ namespace ControleDeCinema.Dominio.ModuloSessao
         {
             List<string> erros = new List<string>();
 
-            if (NumeroMaximoIngresso <= 0)
+            if (NumeroMaximoIngressos <= 0)
                 erros.Add("Número máximo de ingressos deve ser maior que zero.");
 
             if (Data == null)

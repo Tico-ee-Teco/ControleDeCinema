@@ -32,5 +32,10 @@ namespace ControleDeCinema.Infra.ModuloSessao
                 .GroupBy(s => s.Filme.Titulo)
                 .ToList();
         }
+
+        public List<IGrouping<string, Sessao>> ObterSessoesDisponiveisAgrupadas()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

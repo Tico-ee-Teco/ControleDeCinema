@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControleDeCinema.Infra.Migrations
 {
     [DbContext(typeof(ControleDeCinemaDbContext))]
-    [Migration("20240807015931_TBIngresso")]
-    partial class TBIngresso
+    [Migration("20240812202034_tabelas")]
+    partial class tabelas
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,6 +52,32 @@ namespace ControleDeCinema.Infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TBFuncionario", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CPF = "12345678900",
+                            Login = "c.tanaka",
+                            Nome = "Caio Tanaka",
+                            Senha = "sFQZT5W2kK8BUAO8uhhQ"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CPF = "98765432100",
+                            Login = "junior.teixeira201",
+                            Nome = "Júnior Teixeira",
+                            Senha = "eNsoNQxmzglCOs3OK76a"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CPF = "45678912300",
+                            Login = "marcia.silva0306",
+                            Nome = "Márcia Silva",
+                            Senha = "AW6m9OHzgB28v4ZNS5jY"
+                        });
                 });
 
             modelBuilder.Entity("ControleDeCinema.Dominio.ModuloFilme.Filme", b =>
@@ -80,6 +106,24 @@ namespace ControleDeCinema.Infra.Migrations
                     b.HasIndex("Genero_Id");
 
                     b.ToTable("TBFilme", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Duracao = 90,
+                            Estreia = false,
+                            Genero_Id = 2,
+                            Titulo = "Aladdin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Duracao = 127,
+                            Estreia = true,
+                            Genero_Id = 1,
+                            Titulo = "Wolverine vs. Deadpool"
+                        });
                 });
 
             modelBuilder.Entity("ControleDeCinema.Dominio.ModuloGenero.Genero", b =>
@@ -97,6 +141,38 @@ namespace ControleDeCinema.Infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TBGenero", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nome = "Ação"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Nome = "Animação"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Nome = "Aventura"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Nome = "Comédia"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Nome = "Romance"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Nome = "Terror"
+                        });
                 });
 
             modelBuilder.Entity("ControleDeCinema.Dominio.ModuloSessao.Ingresso", b =>
@@ -116,16 +192,39 @@ namespace ControleDeCinema.Infra.Migrations
                     b.Property<int>("NumeroAssento")
                         .HasColumnType("int");
 
-                    b.Property<int>("SessaoId")
+                    b.Property<int>("Sessao_Id")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FuncionarioId");
 
-                    b.HasIndex("SessaoId");
+                    b.HasIndex("Sessao_Id");
 
                     b.ToTable("TBIngresso", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            MeiaEntrada = false,
+                            NumeroAssento = 10,
+                            Sessao_Id = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            MeiaEntrada = true,
+                            NumeroAssento = 25,
+                            Sessao_Id = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            MeiaEntrada = false,
+                            NumeroAssento = 30,
+                            Sessao_Id = 2
+                        });
                 });
 
             modelBuilder.Entity("ControleDeCinema.Dominio.ModuloSessao.Sessao", b =>
@@ -139,10 +238,13 @@ namespace ControleDeCinema.Infra.Migrations
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime");
 
+                    b.Property<bool>("Encerrada")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Filme_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("NumeroMaximoIngresso")
+                    b.Property<int>("NumeroMaximoIngressos")
                         .HasColumnType("int");
 
                     b.Property<int>("Sala_Id")
@@ -155,6 +257,62 @@ namespace ControleDeCinema.Infra.Migrations
                     b.HasIndex("Sala_Id");
 
                     b.ToTable("TBSessao", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 4,
+                            Data = new DateTime(2024, 8, 7, 20, 0, 0, 0, DateTimeKind.Unspecified),
+                            Encerrada = false,
+                            Filme_Id = 2,
+                            NumeroMaximoIngressos = 25,
+                            Sala_Id = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Data = new DateTime(2024, 8, 10, 20, 0, 0, 0, DateTimeKind.Unspecified),
+                            Encerrada = false,
+                            Filme_Id = 1,
+                            NumeroMaximoIngressos = 35,
+                            Sala_Id = 3
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Data = new DateTime(2024, 8, 9, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            Encerrada = false,
+                            Filme_Id = 1,
+                            NumeroMaximoIngressos = 25,
+                            Sala_Id = 3
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Data = new DateTime(2024, 7, 20, 20, 0, 0, 0, DateTimeKind.Unspecified),
+                            Encerrada = true,
+                            Filme_Id = 1,
+                            NumeroMaximoIngressos = 20,
+                            Sala_Id = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Data = new DateTime(2024, 8, 2, 19, 30, 0, 0, DateTimeKind.Unspecified),
+                            Encerrada = false,
+                            Filme_Id = 2,
+                            NumeroMaximoIngressos = 30,
+                            Sala_Id = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Data = new DateTime(2024, 8, 2, 19, 30, 0, 0, DateTimeKind.Unspecified),
+                            Encerrada = true,
+                            Filme_Id = 2,
+                            NumeroMaximoIngressos = 28,
+                            Sala_Id = 2
+                        });
                 });
 
             modelBuilder.Entity("ControleDeCinema.Dominio.ModulosSala.Sala", b =>
@@ -171,12 +329,29 @@ namespace ControleDeCinema.Infra.Migrations
                     b.Property<int>("Numero")
                         .HasColumnType("int");
 
-                    b.Property<int>("NumeroAssentosDisponiveis")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("TBSala", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Capacidade = 30,
+                            Numero = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Capacidade = 35,
+                            Numero = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Capacidade = 32,
+                            Numero = 5
+                        });
                 });
 
             modelBuilder.Entity("ControleDeCinema.Dominio.ModuloFilme.Filme", b =>
@@ -198,7 +373,7 @@ namespace ControleDeCinema.Infra.Migrations
 
                     b.HasOne("ControleDeCinema.Dominio.ModuloSessao.Sessao", "Sessao")
                         .WithMany("Ingressos")
-                        .HasForeignKey("SessaoId")
+                        .HasForeignKey("Sessao_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

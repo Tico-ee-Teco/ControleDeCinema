@@ -56,7 +56,7 @@ namespace ControleDeCinema.Testes.Integracao.ModuloSessao
 
             Assert.IsNotNull(sessaoEncontrada);
             Assert.AreEqual(sessao.Id, sessaoEncontrada.Id);
-            Assert.AreEqual(sessao.NumeroMaximoIngresso, sessaoEncontrada.NumeroMaximoIngresso);
+            Assert.AreEqual(sessao.NumeroMaximoIngressos, sessaoEncontrada.NumeroMaximoIngressos);
             Assert.AreEqual(sessao.Data, sessaoEncontrada.Data);
             Assert.AreEqual(sessao.Sala.Id, sessaoEncontrada.Sala.Id);
             Assert.AreEqual(sessao.Filme.Id, sessaoEncontrada.Filme.Id);
@@ -79,7 +79,7 @@ namespace ControleDeCinema.Testes.Integracao.ModuloSessao
 
             Sessao sessaoEditada = repositorioSessao.SelecionarPorId(sessao.Id);
 
-            sessaoEditada.NumeroMaximoIngresso = 20;
+            sessaoEditada.NumeroMaximoIngressos = 20;
             sessaoEditada.Data = DateTime.Now.AddDays(1);
 
             repositorioSessao.Editar(sessaoEditada);
@@ -88,7 +88,7 @@ namespace ControleDeCinema.Testes.Integracao.ModuloSessao
 
             Assert.IsNotNull(sessaoEditadaNoBanco);
             Assert.AreEqual(sessaoEditada.Id, sessaoEditadaNoBanco.Id);
-            Assert.AreEqual(sessaoEditada.NumeroMaximoIngresso, sessaoEditadaNoBanco.NumeroMaximoIngresso);
+            Assert.AreEqual(sessaoEditada.NumeroMaximoIngressos, sessaoEditadaNoBanco.NumeroMaximoIngressos);
             Assert.AreEqual(sessaoEditada.Data, sessaoEditadaNoBanco.Data);
             Assert.AreEqual(sessaoEditada.Sala.Id, sessaoEditadaNoBanco.Sala.Id);
             Assert.AreEqual(sessaoEditada.Filme.Id, sessaoEditadaNoBanco.Filme.Id);

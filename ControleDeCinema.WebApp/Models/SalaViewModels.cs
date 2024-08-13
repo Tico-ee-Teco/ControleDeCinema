@@ -23,7 +23,14 @@ namespace ControleDeCinema.WebApp.Models
         public int Capacidade { get; set; }
     }
 
-    public class ExcluirSalaViewModel
+    //public class ExcluirSalaViewModel
+    //{
+    //    public int Id { get; set; }
+    //    public int Numero { get; set; }
+    //    public int Capacidade { get; set; }
+    //}
+
+    public class DetalhesSalaViewModel
     {
         public int Id { get; set; }
         public int Numero { get; set; }

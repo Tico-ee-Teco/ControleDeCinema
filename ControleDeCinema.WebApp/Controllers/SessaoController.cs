@@ -1,22 +1,38 @@
-﻿using ControleDeCinema.Dominio.ModuloSessao;
+﻿using ControleDeCinema.Dominio.ModuloFilme;
+using ControleDeCinema.Dominio.ModuloGenero;
+using ControleDeCinema.Dominio.ModuloSessao;
+using ControleDeCinema.Dominio.ModulosSala;
 using ControleDeCinema.Infra.Compartilhado;
-using ControleDeCinema.Infra.ModuloFilme;
-using ControleDeCinema.Infra.ModuloGenero;
-using ControleDeCinema.Infra.ModuloSala;
 using ControleDeCinema.Infra.ModuloSessao;
+using ControleDeCinema.WebApp.Extensions;
 using ControleDeCinema.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+
 
 namespace ControleDeCinema.WebApp.Controllers
 {
     public class SessaoController : Controller
     {
-        public ViewResult Listar()
-        {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioSessao = new RepositorioSessaoEmOrm(db);
+        private readonly IRepositorioSessao repositorioSessao;
+        private readonly IRepositorioSala repositorioSala;
+        private readonly IRepositorioFilme repositorioFilme;
+        private readonly IRepositorioGenero repositorioGenero;
 
+        public SessaoController(
+            IRepositorioSessao repositorioSessao,
+            IRepositorioSala repositorioSala,
+            IRepositorioFilme repositorioFilme,
+            IRepositorioGenero repositorioGenero
+        )
+        {
+            this.repositorioSessao = repositorioSessao;
+            this.repositorioSala = repositorioSala;
+            this.repositorioFilme = repositorioFilme;
+            this.repositorioGenero = repositorioGenero;
+        }
+        public IActionResult Listar()
+        {
             var sessoes = repositorioSessao.ObterSessoesAgrupadas();
 
             var listaSessaoVm = sessoes
@@ -31,19 +47,17 @@ namespace ControleDeCinema.WebApp.Controllers
                         Data = s.Data
                     })
                 });
-
+            
+            ViewBag.Mensagem = TempData.DesserializarMensagemViewModel(); 
+            
             return View(listaSessaoVm);
         }
 
-        public ViewResult Inserir()
+        public IActionResult Inserir()
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioFilme = new RepositorioFilmeEmOrm(db);
-            var repositorioSala = new RepositorioSalaEmOrm(db);
-
             var filmes = repositorioFilme.SelecionarTodos();
             var salas = repositorioSala.SelecionarTodos();
-
+            
             var inserirSessaoVm = new InserirSessaoViewModel
             {
                 Filmes = filmes.Select(f => new SelectListItem
@@ -58,44 +72,33 @@ namespace ControleDeCinema.WebApp.Controllers
                 })
             };
 
-            return View(inserirSessaoVm);
+            return RedirectToAction(nameof(Listar));
         }
 
         [HttpPost]
-        public ViewResult Inserir(InserirSessaoViewModel inserirSessaoVm)
+        public IActionResult Inserir(InserirSessaoViewModel inserirSessaoVm)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioFilme = new RepositorioFilmeEmOrm(db);
-            var repositorioSala = new RepositorioSalaEmOrm(db);
-            var repositorioSessao = new RepositorioSessaoEmOrm(db);
-
             var filme = repositorioFilme.SelecionarPorId(inserirSessaoVm.IdFilme);
             var sala = repositorioSala.SelecionarPorId(inserirSessaoVm.IdSala);
 
             var sessao = new Sessao(inserirSessaoVm.NumeroMaximoIngresso, inserirSessaoVm.Data, sala, filme);
 
             repositorioSessao.Inserir(sessao);
-
+            
+            TempData.SerializarMensagemViewModel(new MensagemViewModel()
+            {
+                Titulo = "Sucesso",
+                Mensagem = $"O registro ID [{sessao.Id}] foi inserido com sucesso!"
+            });
+            
             HttpContext.Response.StatusCode = 201;
 
-            var notificacaoVm = new NotificacaoViewModel
-            {
-                Mensagem = $"O registro com o ID [{sessao.Id}] foi cadastrado com sucesso!",
-                LinkRedirecionamento = "/sessao/listar"
-            };
-
-            return View("mensagens", notificacaoVm);
+            return RedirectToAction(nameof(Listar));
         }
 
-        public ViewResult Editar(int id)
+        public IActionResult Editar(int id)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioFilme = new RepositorioFilmeEmOrm(db);
-            var repositorioSala = new RepositorioSalaEmOrm(db);
-            var repositorioSessao = new RepositorioSessaoEmOrm(db);
-
             var sessao = repositorioSessao.SelecionarPorId(id);
-
             var filmes = repositorioFilme.SelecionarTodos();
             var salas = repositorioSala.SelecionarTodos();
 
@@ -108,7 +111,7 @@ namespace ControleDeCinema.WebApp.Controllers
                 NomeGenero = sessao.Filme.Genero.Nome,
                 Sala = sessao.Sala.Numero,
                 Data = sessao.Data,
-                NumeroMaximoIngresso = sessao.NumeroMaximoIngresso,
+                NumeroMaximoIngresso = sessao.NumeroMaximoIngressos,
                 Filmes = filmes.Select(f => new SelectListItem
                 {
                     Text = f.Titulo,
@@ -120,48 +123,34 @@ namespace ControleDeCinema.WebApp.Controllers
                     Value = s.Id.ToString()
                 })
             };
-
             return View(editarSessaoVm);
         }
 
         [HttpPost]
-        public ViewResult Editar(EditarSessaoViewModel editarSessaoVm)
+        public IActionResult Editar(EditarSessaoViewModel editarSessaoVm)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioFilme = new RepositorioFilmeEmOrm(db);
-            var repositorioSala = new RepositorioSalaEmOrm(db);
-            var repositorioSessao = new RepositorioSessaoEmOrm(db);
-
-            //var filme = repositorioFilme.SelecionarPorId(editarSessaoVm.IdFilme);
-            //var sala = repositorioSala.SelecionarPorId(editarSessaoVm.IdSala);
-
             var sessaoOriginal = repositorioSessao.SelecionarPorId(editarSessaoVm.Id);
 
             sessaoOriginal.Filme.Id = editarSessaoVm.IdFilme;
             sessaoOriginal.Sala.Id = editarSessaoVm.IdSala;
             sessaoOriginal.Data = editarSessaoVm.Data;
-            sessaoOriginal.NumeroMaximoIngresso = editarSessaoVm.NumeroMaximoIngresso;
+            sessaoOriginal.NumeroMaximoIngressos = editarSessaoVm.NumeroMaximoIngresso;
 
             repositorioSessao.Editar(sessaoOriginal);
 
             HttpContext.Response.StatusCode = 200;
 
-            var notificacaoVm = new NotificacaoViewModel
+            TempData.SerializarMensagemViewModel(new MensagemViewModel()
             {
-                Mensagem = $"O registro com o ID [{sessaoOriginal.Id}] foi atualizado com sucesso!",
-                LinkRedirecionamento = "/sessao/listar"
-            };
+                Titulo = "Sucesso",
+                Mensagem = $"O registro ID [{sessaoOriginal.Id}] foi editado com sucesso!"
+            });
 
-            return View("mensagens", notificacaoVm);
+            return RedirectToAction(nameof(Listar));
         }
 
-        public ViewResult Excluir(int id)
+        public IActionResult Excluir(int id)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioSessao = new RepositorioSessaoEmOrm(db);
-            var repositorioFilme = new RepositorioFilmeEmOrm(db);
-            var repositorioSala = new RepositorioSalaEmOrm(db);
-
             var sessao = repositorioSessao.SelecionarPorId(id);
             var filme = repositorioFilme.SelecionarPorId(sessao.Filme.Id);
             var sala = repositorioSala.SelecionarPorId(sessao.Sala.Id);
@@ -172,39 +161,32 @@ namespace ControleDeCinema.WebApp.Controllers
                 Filme = filme.Titulo,
                 Sala = sala.Numero,
                 Data = sessao.Data,
-                NumeroMaximoIngresso = sessao.NumeroMaximoIngresso
+                NumeroMaximoIngresso = sessao.NumeroMaximoIngressos
             };
 
             return View(excluirSessaoVm);
         }
 
-        [HttpPost, ActionName("excluir")]
-        public ViewResult ExcluirConfirmado(ExcluirSessaoViewModel excluirSessaoVm)
+        [HttpPost]
+        public IActionResult ExcluirConfirmado(DetalhesSessaoViewModel detalhesSessaoVm)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioSessao = new RepositorioSessaoEmOrm(db);
-
-            var sessao = repositorioSessao.SelecionarPorId(excluirSessaoVm.Id);
+           var sessao = repositorioSessao.SelecionarPorId(detalhesSessaoVm.Id);
 
             repositorioSessao.Excluir(sessao);
 
             HttpContext.Response.StatusCode = 200;
 
-            var notificacaoVm = new NotificacaoViewModel
+            TempData.SerializarMensagemViewModel(new MensagemViewModel()
             {
-                Mensagem = $"O registro com o ID [{sessao.Id}] foi excluído com sucesso!",
-                LinkRedirecionamento = "/sessao/listar"
-            };
+                Titulo = "Sucesso",
+                Mensagem = $"O registro ID [{sessao.Id}] foi excluído com sucesso!"
+            });
 
-            return View("mensagens", notificacaoVm);
+            return RedirectToAction(nameof(Listar));
         }
 
-        public ViewResult Detalhes(int id)
+        public IActionResult Detalhes(int id)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioSessao = new RepositorioSessaoEmOrm(db);
-            var repositorioGenero = new RepositorioGeneroEmOrm(db);
-
             var sessao = repositorioSessao.SelecionarPorId(id);
             var genero = repositorioGenero.SelecionarTodos()
                 .Select(x => new SelectListItem(x.Nome, x.Id.ToString()));
@@ -216,7 +198,7 @@ namespace ControleDeCinema.WebApp.Controllers
                 Genero = genero.First(x => x.Value == sessao.Filme.Genero.Id.ToString()).Text,
                 Sala = sessao.Sala.Numero,
                 Data = sessao.Data,
-                NumeroMaximoIngresso = sessao.NumeroMaximoIngresso
+                NumeroMaximoIngresso = sessao.NumeroMaximoIngressos
             };
 
             return View(detalhesSessaoVm);

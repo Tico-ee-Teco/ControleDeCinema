@@ -1,6 +1,8 @@
-﻿using ControleDeCinema.Dominio.ModulosSala;
+﻿using ControleDeCinema.Dominio.Compartilhado;
+using ControleDeCinema.Dominio.ModulosSala;
 using ControleDeCinema.Infra.Compartilhado;
 using ControleDeCinema.Infra.ModuloSala;
+using ControleDeCinema.WebApp.Extensions;
 using ControleDeCinema.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,14 +10,16 @@ namespace ControleDeCinema.WebApp.Controllers
 {
     public class SalaController : Controller
     {
-        public ViewResult Listar()
+        private readonly IRepositorioBase<Sala> repositorioSala;
+        public SalaController(IRepositorioBase<Sala> repositorioSala)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioSala = new RepositorioSalaEmOrm(db);
+            this.repositorioSala = repositorioSala;
+        }
+        public IActionResult Listar()
+        {
+            var salasCadastradas = repositorioSala.SelecionarTodos();
 
-            var salas = repositorioSala.SelecionarTodos();
-
-            var listaSalasVm = salas
+            var listaSalasVm = salasCadastradas
                 .Select(s => new ListarSalaViewModel
                 {
                     Id = s.Id,
@@ -23,41 +27,39 @@ namespace ControleDeCinema.WebApp.Controllers
                     Capacidade = s.Capacidade,
                 });
 
+            ViewBag.Mensagem = TempData.DesserializarMensagemViewModel(); 
+
             return View(listaSalasVm);
         }
 
-        public ViewResult Inserir()
+        public IActionResult Inserir()
         {
             return View();
         }
 
         [HttpPost]
-        public ViewResult Inserir(InserirSalaViewModel inserirSalaVm)
+        public IActionResult Inserir(InserirSalaViewModel inserirSalaVm)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioSala = new RepositorioSalaEmOrm(db);
-
             var sala = new Sala(inserirSalaVm.Numero, inserirSalaVm.Capacidade);
-
+            
             repositorioSala.Inserir(sala);
 
-            HttpContext.Response.StatusCode = 201;
-
-            var notificacaoVm = new NotificacaoViewModel
+            TempData.SerializarMensagemViewModel(new MensagemViewModel()
             {
-               Mensagem = $"O registro com o ID [{sala.Id}] foi cadastrado com sucesso!",
-               LinkRedirecionamento = "/sala/listar"
-            };
-
-            return View("mensagens", notificacaoVm);
+                Titulo = "Sucesso",
+                Mensagem = $"O registro ID [{sala.Id}] foi inserido com sucesso!"
+            });
+            HttpContext.Response.StatusCode = 201;
+            
+            return RedirectToAction(nameof(Listar));
         }
 
-        public ViewResult Editar(int id)
+        public IActionResult Editar(int id)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioSala = new RepositorioSalaEmOrm(db);
-
             var sala = repositorioSala.SelecionarPorId(id);
+
+            if (sala is null)
+                return MensagemRegistroNaoEnconrtado(id);
 
             var editarSalaVm = new EditarSalaViewModel
             {
@@ -70,66 +72,85 @@ namespace ControleDeCinema.WebApp.Controllers
         }
 
         [HttpPost]
-        public ViewResult Editar(EditarSalaViewModel editarSalaVm)
+        public IActionResult Editar(EditarSalaViewModel editarSalaVm)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioSala = new RepositorioSalaEmOrm(db);
-
             var salaOriginal = repositorioSala.SelecionarPorId(editarSalaVm.Id);
 
             salaOriginal.Numero = editarSalaVm.Numero;
             salaOriginal.Capacidade = editarSalaVm.Capacidade;
 
             repositorioSala.Editar(salaOriginal);
+            
+            TempData.SerializarMensagemViewModel(new MensagemViewModel()
+            {
+                Titulo = "Sucesso",
+                Mensagem = $"O registro ID [{salaOriginal.Id}] foi editado com sucesso!"
+            });
 
             HttpContext.Response.StatusCode = 200;
 
-            var notificacaoVm = new NotificacaoViewModel
-            {
-                Mensagem = $"O registro com o ID [{salaOriginal.Id}] foi atualizado com sucesso!",
-                LinkRedirecionamento = "/sala/listar"
-            };
-
-            return View("mensagens", notificacaoVm);
+            return RedirectToAction(nameof(Listar));
         }
 
-        public ViewResult Excluir(int id)
+        public IActionResult Excluir(int id)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioSala = new RepositorioSalaEmOrm(db);
-
             var sala = repositorioSala.SelecionarPorId(id);
+            
+            if (sala is null)
+                return MensagemRegistroNaoEnconrtado(id);
 
-            var excluirSalaVm = new ExcluirSalaViewModel
+            var detalhesSalaViewModel = new DetalhesSalaViewModel()
             {
                 Id = sala.Id,
                 Numero = sala.Numero,
                 Capacidade = sala.Capacidade,
             };
+            
+            TempData.SerializarMensagemViewModel(new MensagemViewModel()
+            {
+                Titulo = "Sucesso",
+                Mensagem = $"O registro ID [{sala.Id}] foi excluído com sucesso!"
+            });
 
-            return View(excluirSalaVm);
+            return View(detalhesSalaViewModel);
         }
 
         [HttpPost, ActionName("excluir")]
-        public ViewResult ExcluirConfirmado(ExcluirSalaViewModel excluirSalaVm)
+        public IActionResult ExcluirConfirmado(DetalhesSalaViewModel detalhesSalaVm)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioSala = new RepositorioSalaEmOrm(db);
-
-            var sala = repositorioSala.SelecionarPorId(excluirSalaVm.Id);
+            var sala = repositorioSala.SelecionarPorId(detalhesSalaVm.Id);
+            
+            if (sala is null)
+                return RedirectToAction(nameof(Listar));
 
             repositorioSala.Excluir(sala);
 
             HttpContext.Response.StatusCode = 200;
+            
+            return RedirectToAction(nameof(Listar));
+        }
 
-            var notificacaoVm = new NotificacaoViewModel
+        public IActionResult Detalhes(int id)
+        {
+            var sala = repositorioSala.SelecionarPorId(id);
+
+            if (sala is null)
+                return MensagemRegistroNaoEnconrtado(id);
+            return RedirectToAction(nameof(Listar));
+        }
+
+        public IActionResult MensagemRegistroNaoEnconrtado(int idRegsitro)
+        {
+            TempData.SerializarMensagemViewModel(new MensagemViewModel
             {
-                Mensagem = $"O registro com o ID [{sala.Id}] foi excluído com sucesso!",
-                LinkRedirecionamento = "/sala/listar"
-            };
+                Titulo = "Erro",
+                Mensagem = $"Não foi possivel encontrar ID [{idRegsitro}]!"
+            });
 
-            return View("mensagens", notificacaoVm);
+            return RedirectToAction(nameof(Listar));
         }
 
     }
+
+    
 }

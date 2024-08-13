@@ -7,7 +7,6 @@ namespace ControleDeCinema.Dominio.ModulosSala
     {
         public int Numero { get; set; }
         public int Capacidade { get; set;}
-        public int NumeroAssentosDisponiveis { get; set; } // Quantidade de assentos disponíveis na sala
         public List<Sessao> Sessoes { get; set; } // Lista de sessões que ocorrem na sala
 
         public Sala()

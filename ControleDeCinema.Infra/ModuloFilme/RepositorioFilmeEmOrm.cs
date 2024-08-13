@@ -58,7 +58,7 @@ namespace ControleDeCinema.Infra.ModuloFilme
            return dbContext.Filmes
                .Include(f => f.Genero)
                .ToList();
-        }
+       }
 
        
     }
