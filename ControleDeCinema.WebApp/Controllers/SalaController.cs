@@ -1,25 +1,26 @@
-﻿using ControleDeCinema.Dominio.Compartilhado;
-using ControleDeCinema.Dominio.ModulosSala;
-using ControleDeCinema.Infra.Compartilhado;
-using ControleDeCinema.Infra.ModuloSala;
+﻿using ControleDeCinema.Dominio.ModulosSala;
 using ControleDeCinema.WebApp.Extensions;
 using ControleDeCinema.WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace ControleDeCinema.WebApp.Controllers
 {
-    public class SalaController : Controller
+    [Authorize(Roles = "Empresa")]
+    public class SalaController : AuthController
     {
-        private readonly IRepositorioBase<Sala> repositorioSala;
-        public SalaController(IRepositorioBase<Sala> repositorioSala)
+        private readonly IRepositorioSala repositorioSala;
+        public SalaController(IRepositorioSala repositorioSala)
         {
             this.repositorioSala = repositorioSala;
         }
         public IActionResult Listar()
-        {
-            var salasCadastradas = repositorioSala.SelecionarTodos();
+        { 
+            var salas = repositorioSala
+                .Filtrar(s => s.UsuarioId == UsuarioId);
 
-            var listaSalasVm = salasCadastradas
+            var listaSalasVm = salas
                 .Select(s => new ListarSalaViewModel
                 {
                     Id = s.Id,
@@ -40,7 +41,14 @@ namespace ControleDeCinema.WebApp.Controllers
         [HttpPost]
         public IActionResult Inserir(InserirSalaViewModel inserirSalaVm)
         {
-            var sala = new Sala(inserirSalaVm.Numero, inserirSalaVm.Capacidade);
+            
+
+            var sala = new Sala()
+            {
+                Numero = inserirSalaVm.Numero,
+                Capacidade = inserirSalaVm.Capacidade,
+                UsuarioId = UsuarioId.GetValueOrDefault()
+            };
             
             repositorioSala.Inserir(sala);
 
@@ -139,16 +147,7 @@ namespace ControleDeCinema.WebApp.Controllers
             return RedirectToAction(nameof(Listar));
         }
 
-        public IActionResult MensagemRegistroNaoEnconrtado(int idRegsitro)
-        {
-            TempData.SerializarMensagemViewModel(new MensagemViewModel
-            {
-                Titulo = "Erro",
-                Mensagem = $"Não foi possivel encontrar ID [{idRegsitro}]!"
-            });
-
-            return RedirectToAction(nameof(Listar));
-        }
+       
 
     }
 

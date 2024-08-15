@@ -22,6 +22,11 @@ public class MapeadorSalaEmOrm : IEntityTypeConfiguration<Sala>
             .IsRequired()
             .HasColumnType("int");
 
+        sBuilder.Property(s => s.UsuarioId)
+            .IsRequired()
+            .HasColumnType("int")
+            .HasColumnName("Usuario_Id");
+
         sBuilder.HasOne(s => s.Usuario)
             .WithMany()
             .HasForeignKey("Usuario_Id")

@@ -10,6 +10,8 @@ namespace ControleDeCinema.Dominio.Compartilhado
 
         public abstract List<string> Validar();
 
+        public int UsuarioId { get; set; }
+
         public Usuario Usuario { get; set; }
     }
 }

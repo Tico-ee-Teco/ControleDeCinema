@@ -60,6 +60,9 @@ namespace ControleDeCinema.Infra.ModuloFilme
                .ToList();
        }
 
-       
+       public List<Filme> Filtrar(Func<Filme, bool> predicate)
+       {
+           throw new NotImplementedException();
+       }
     }
 }

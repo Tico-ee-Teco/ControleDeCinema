@@ -52,6 +52,9 @@ namespace ControleDeCinema.Infra.ModuloGenero
                 .FirstOrDefault(g => g.Id == id)!;
         }
 
-       
+        public List<Genero> Filtrar(Func<Genero, bool> predicate)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

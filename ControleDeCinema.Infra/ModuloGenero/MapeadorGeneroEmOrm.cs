@@ -19,6 +19,11 @@ public class MapeadorGeneroEmOrm : IEntityTypeConfiguration<Genero>
             .IsRequired()
             .HasColumnType("varchar(50)");
 
+        gBuilder.Property(g => g.UsuarioId)
+            .IsRequired()
+            .HasColumnType("int")
+            .HasColumnName("Usuario_Id");
+
         gBuilder.HasOne(g => g.Usuario)
             .WithMany()
             .HasForeignKey("Usuario_Id")

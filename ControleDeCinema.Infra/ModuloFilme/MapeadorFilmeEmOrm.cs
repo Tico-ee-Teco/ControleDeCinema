@@ -33,6 +33,11 @@ public class MapeadorFilmeEmOrm : IEntityTypeConfiguration<Filme>
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
 
+        fBuilder.Property(f => f.UsuarioId)
+            .IsRequired()
+            .HasColumnType("int")
+            .HasColumnName("Usuario_Id");
+
         fBuilder.HasOne(f => f.Usuario)
             .WithMany()
             .HasForeignKey("Usuario_Id")

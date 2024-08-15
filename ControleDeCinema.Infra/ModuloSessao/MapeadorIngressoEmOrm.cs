@@ -22,6 +22,11 @@ public class MapeadorIngressoEmOrm : IEntityTypeConfiguration<Ingresso>
             .IsRequired()
             .HasColumnType("int");
 
+        iBuilder.Property(i => i.UsuarioId)
+            .IsRequired()
+            .HasColumnType("int")
+            .HasColumnName("Usuario_Id");
+
         iBuilder.HasOne(i => i.Usuario)
             .WithMany()
             .HasForeignKey("Usuario_Id")

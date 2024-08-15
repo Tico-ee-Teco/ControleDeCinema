@@ -30,6 +30,11 @@ public class MapeadorFuncionarioEmOrm : IEntityTypeConfiguration<Funcionario>
             .IsRequired()
             .HasColumnType("varchar(200)");
 
+        fuBuilder.Property(f => f.UsuarioId)
+            .IsRequired()
+            .HasColumnType("int")
+            .HasColumnName("Usuario_Id");
+
         fuBuilder.HasOne(f => f.Usuario)
             .WithMany()
             .HasForeignKey("Usuario_Id")

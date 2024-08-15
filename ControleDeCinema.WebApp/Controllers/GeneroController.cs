@@ -1,18 +1,22 @@
 ﻿using ControleDeCinema.Dominio.ModuloGenero;
-using ControleDeCinema.Infra.Compartilhado;
-using ControleDeCinema.Infra.ModuloGenero;
+using ControleDeCinema.WebApp.Extensions;
 using ControleDeCinema.WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDeCinema.WebApp.Controllers
 {
+    [Authorize(Roles = "Empresa")]
     public class GeneroController : Controller
     {
-        public ViewResult Listar()
-        {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioGenero = new RepositorioGeneroEmOrm(db);
+        private readonly IRepositorioGenero repositorioGenero;
 
+        public GeneroController(IRepositorioGenero repositorioGenero)
+        {
+            this.repositorioGenero = repositorioGenero;
+        }
+        public IActionResult Listar()
+        {
             var generos = repositorioGenero.SelecionarTodos();
 
             var listarGenerosVm = generos
@@ -22,40 +26,36 @@ namespace ControleDeCinema.WebApp.Controllers
                     Nome = g.Nome
                 });
 
+            ViewBag.Mensagem = TempData.DesserializarMensagemViewModel();
+
             return View(listarGenerosVm);
         }
 
-        public ViewResult Inserir()
+        public IActionResult Inserir()
         {
-            return View();
+            return RedirectToAction(nameof(Listar));
         }
 
         [HttpPost]
-        public ViewResult Inserir(InserirGeneroViewModel inserirGeneroVm)
+        public IActionResult Inserir(InserirGeneroViewModel inserirGeneroVm)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioGenero = new RepositorioGeneroEmOrm(db);
-
             var genero = new Genero(inserirGeneroVm.Nome);
 
             repositorioGenero.Inserir(genero);
 
             HttpContext.Response.StatusCode = 201;
 
-            var notificacaoVm = new NotificacaoViewModel
+            TempData.SerializarMensagemViewModel(new MensagemViewModel()
             {
-                Mensagem = $"O registro com o ID [{genero.Id}] foi cadastrado com sucesso!",
-                LinkRedirecionamento = "/genero/listar"
-            };
+                Titulo = "Sucesso",
+                Mensagem = $"O registro ID [{genero.Id}] foi inserido com sucesso!"
+            });
 
-            return View("mensagens", notificacaoVm);
+            return RedirectToAction(nameof(Listar));
         }
 
-        public ViewResult Editar(int id)
+        public IActionResult Editar(int id)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioGenero = new RepositorioGeneroEmOrm(db);
-
             var genero = repositorioGenero.SelecionarPorId(id);
 
             var editarGeneroVm = new EditarGeneroViewModel
@@ -64,15 +64,12 @@ namespace ControleDeCinema.WebApp.Controllers
                 Nome = genero.Nome
             };
 
-            return View(editarGeneroVm);
+            return RedirectToAction(nameof(Listar));
         }
 
         [HttpPost]
-        public ViewResult Editar(EditarGeneroViewModel editarGeneroVm)
+        public IActionResult Editar(EditarGeneroViewModel editarGeneroVm)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioGenero = new RepositorioGeneroEmOrm(db);
-
             var generoOriginal = repositorioGenero.SelecionarPorId(editarGeneroVm.Id);
 
             generoOriginal.Nome = editarGeneroVm.Nome;
@@ -81,20 +78,17 @@ namespace ControleDeCinema.WebApp.Controllers
 
             HttpContext.Response.StatusCode = 200;
 
-            var notificacaoVm = new NotificacaoViewModel
+            TempData.SerializarMensagemViewModel(new MensagemViewModel()
             {
-                Mensagem = $"O registro com o ID [{generoOriginal.Id}] foi atualizado com sucesso!",
-                LinkRedirecionamento = "/genero/listar"
-            };
+                Titulo = "Sucesso",
+                Mensagem = $"O registro ID [{generoOriginal.Id}] foi editado com sucesso!"
+            });
 
-            return View("mensagens", notificacaoVm);
+            return RedirectToAction(nameof(Listar));
         }
 
-        public ViewResult Excluir(int id)
+        public IActionResult Excluir(int id)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioGenero = new RepositorioGeneroEmOrm(db);
-
             var genero = repositorioGenero.SelecionarPorId(id);
 
             var excluirGeneroVm = new ExcluirGeneroViewModel
@@ -105,28 +99,25 @@ namespace ControleDeCinema.WebApp.Controllers
                     .Select(f => new ListarFilmeGeneroViewModel {Nome = f.Titulo})
             };
 
-            return View(excluirGeneroVm);
+            return RedirectToAction(nameof(Listar));
         }
 
-        [HttpPost, ActionName("excluir")]
-        public ViewResult ExcluirConfirmado(int id)
+        [HttpPost]
+        public IActionResult ExcluirConfirmado(int id)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioGenero = new RepositorioGeneroEmOrm(db);
-
             var genero = repositorioGenero.SelecionarPorId(id);
 
             repositorioGenero.Excluir(genero);
 
             HttpContext.Response.StatusCode = 200;
 
-            var notificacaoVm = new NotificacaoViewModel
+            TempData.SerializarMensagemViewModel(new MensagemViewModel()
             {
-                Mensagem = $"O registro com o ID [{genero.Id}] foi excluído com sucesso!",
-                LinkRedirecionamento = "/genero/listar"
-            };
+                Titulo = "Sucesso",
+                Mensagem = $"O registro ID [{genero.Id}] foi excluído com sucesso!"
+            });
 
-            return View("mensagens", notificacaoVm);
+            return RedirectToAction(nameof(Listar));
         }
 
         

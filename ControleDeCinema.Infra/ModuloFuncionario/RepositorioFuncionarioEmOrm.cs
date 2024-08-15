@@ -13,4 +13,9 @@ public class RepositorioFuncionarioEmOrm : RepositorioBaseEmOrm<Funcionario>,IRe
     {
         return dbContext.Funcionarios;
     }
+
+    public List<Funcionario> Filtrar(Func<Funcionario, bool> predicate)
+    {
+        throw new NotImplementedException();
+    }
 }

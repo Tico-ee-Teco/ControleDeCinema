@@ -4,18 +4,20 @@
     ViewBag.Title = "Detalhes da Sessão";
 }
 
-<div class="row mt-3">
-    <div class="col-lg-6">
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title">Filme: @Model.Filme</h3>
-                <p class="card-text"><strong>Gênero:</strong> @Model.Genero</p>
-                <p class="card-text"><strong>Sala:</strong> @Model.Sala</p>
-                <p class="card-text"><strong>Data e Hora:</strong> @Model.Data.ToString("dd/MM/yyyy HH:mm")</p>
-                <p class="card-text"><strong>Ingressos Disponíveis:</strong> @Model.NumeroMaximoIngresso</p>
-                <a href="/sessao/listar" class="btn btn-info">Voltar</a>
-                <a href="/sessao/ingresso/@Model.Id" class="btn btn-success">Comprar Ingressos</a>
-            </div>
-        </div>
+<div class="col">
+    <partial name="_Informacoes" model="Model"></partial>
+
+    <div class="d-grid gap-2 d-md-block mt-4">
+        @if (Model.Encerrada == "Disponível")
+        {
+            <a class="btn btn-primary px-5" href="/sessao/comprar-ingresso/@Model.Id">
+                <i class="bi bi-coin me-1"></i>
+                Comprar Ingresso
+            </a>
+        }
+        <a class="btn btn-outline-primary px-5" href="/sessao/listar">
+            <i class="bi bi-arrow-return-left me-1"></i>
+            Voltar
+        </a>
     </div>
 </div>

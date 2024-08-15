@@ -7,5 +7,7 @@
         bool Excluir(TEntidade registro);
         TEntidade SelecionarPorId(int id);
         List<TEntidade> SelecionarTodos();
+        List<TEntidade> Filtrar(Func<TEntidade, bool> predicate); // filtrar apenas usuários ativos, por exemplo
+
     }
 }

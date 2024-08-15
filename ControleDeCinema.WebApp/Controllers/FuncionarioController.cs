@@ -1,6 +1,5 @@
 ﻿using ControleDeCinema.Dominio;
-using ControleDeCinema.Infra.Compartilhado;
-using ControleDeCinema.Infra.ModuloFuncionario;
+using ControleDeCinema.WebApp.Extensions;
 using ControleDeCinema.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,11 +7,14 @@ namespace ControleDeCinema.WebApp.Controllers
 {
     public class FuncionarioController : Controller
     {
-        public ViewResult Listar()
-        {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioFuncionario = new RepositorioFuncionarioEmOrm(db);
+        private readonly IRepositorioFuncionario repositorioFuncionario;
 
+        public FuncionarioController(IRepositorioFuncionario repositorioFuncionario)
+        {
+            this.repositorioFuncionario = repositorioFuncionario;
+        }
+        public IActionResult Listar()
+        {
             var funcionarios = repositorioFuncionario.SelecionarTodos();
 
             var listarFuncionariosVm = funcionarios
@@ -22,40 +24,36 @@ namespace ControleDeCinema.WebApp.Controllers
                     Nome = f.Nome,
                 });
 
+            ViewBag.Mensagem = TempData.DesserializarMensagemViewModel();
+
             return View(listarFuncionariosVm);
         }
 
-        public ViewResult Inserir()
+        public IActionResult Inserir()
         {
-            return View();
+            return RedirectToAction(nameof(Listar));
         }
 
         [HttpPost]
-        public ViewResult Inserir(InserirFuncionarioViewModel inserirFuncionarioVm)
+        public IActionResult Inserir(InserirFuncionarioViewModel inserirFuncionarioVm)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioFuncionario = new RepositorioFuncionarioEmOrm(db);
-
             var funcionario = new Funcionario(inserirFuncionarioVm.Nome, inserirFuncionarioVm.Cpf, inserirFuncionarioVm.Login, inserirFuncionarioVm.Senha);
 
             repositorioFuncionario.Inserir(funcionario);
 
             HttpContext.Response.StatusCode = 201;
 
-            var notificacaoVm = new NotificacaoViewModel
+            TempData.SerializarMensagemViewModel(new MensagemViewModel()
             {
-                Mensagem = $"O registro com o ID [{funcionario.Id}] foi cadastrado com sucesso!",
-                LinkRedirecionamento = "/funcionario/listar"
-            };
+                Titulo = "Sucesso",
+                Mensagem = $"O registro ID [{funcionario.Id}] foi inserido com sucesso!"
+            });
 
-            return View("mensagens", notificacaoVm);
+            return RedirectToAction(nameof(Listar));
         }
 
-        public ViewResult Editar(int id)
+        public IActionResult Editar(int id)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioFuncionario = new RepositorioFuncionarioEmOrm(db);
-
             var funcionario = repositorioFuncionario.SelecionarPorId(id);
 
             var editarFuncionarioVm = new EditarFuncionarioViewModel
@@ -67,15 +65,12 @@ namespace ControleDeCinema.WebApp.Controllers
                 Senha = funcionario.Senha
             };
 
-            return View(editarFuncionarioVm);
+            return RedirectToAction(nameof(Listar));
         }
 
         [HttpPost]
-        public ViewResult Editar(EditarFuncionarioViewModel editarFuncionarioVm)
+        public IActionResult Editar(EditarFuncionarioViewModel editarFuncionarioVm)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioFuncionario = new RepositorioFuncionarioEmOrm(db);
-
             var funcionarioOriginal = repositorioFuncionario.SelecionarPorId(editarFuncionarioVm.Id);
 
             funcionarioOriginal.Nome = editarFuncionarioVm.Nome;
@@ -85,20 +80,17 @@ namespace ControleDeCinema.WebApp.Controllers
 
             repositorioFuncionario.Editar(funcionarioOriginal);
 
-            var notificacaoVm = new NotificacaoViewModel
+            TempData.SerializarMensagemViewModel(new MensagemViewModel()
             {
-                Mensagem = $"O registro com o ID [{funcionarioOriginal.Id}] foi editado com sucesso!",
-                LinkRedirecionamento = "/funcionario/listar"
-            };
+                Titulo = "Sucesso",
+                Mensagem = $"O registro ID [{funcionarioOriginal.Id}] foi editado com sucesso!"
+            });
 
-            return View("mensagens", notificacaoVm);
+            return RedirectToAction(nameof(Listar));
         }
         
-        public ViewResult Excluir(int id)
+        public IActionResult Excluir(int id)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioFuncionario = new RepositorioFuncionarioEmOrm(db);
-
             var funcionario = repositorioFuncionario.SelecionarPorId(id);
 
             var excluirFuncionarioVm = new ExcluirFuncionarioViewModel()
@@ -110,26 +102,23 @@ namespace ControleDeCinema.WebApp.Controllers
                 Senha = funcionario.Senha
             };
 
-            return View(excluirFuncionarioVm);
+            return RedirectToAction(nameof(Listar));
         }
         
-        [HttpPost, ActionName("excluir")]
-        public ViewResult Excluirconfirmado(ExcluirFuncionarioViewModel excluirFuncionarioVm)
+        [HttpPost]
+        public IActionResult Excluirconfirmado(ExcluirFuncionarioViewModel excluirFuncionarioVm)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioFuncionario = new RepositorioFuncionarioEmOrm(db);
-            
             var funcionario = repositorioFuncionario.SelecionarPorId(excluirFuncionarioVm.Id);
 
             repositorioFuncionario.Excluir(funcionario);
 
-            var notificacaoVm = new NotificacaoViewModel
+            TempData.SerializarMensagemViewModel(new MensagemViewModel()
             {
-                Mensagem = $"O registro com o ID [{funcionario.Id}] foi excluido com sucesso!",
-                LinkRedirecionamento = "/funcionario/listar"
-            };
+                Titulo = "Sucesso",
+                Mensagem = $"O registro ID [{funcionario.Id}] foi excluído com sucesso!"
+            });
 
-            return View("mensagens", notificacaoVm);
+            return RedirectToAction(nameof(Listar));
         }
     }
 }

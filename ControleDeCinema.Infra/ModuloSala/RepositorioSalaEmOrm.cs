@@ -14,5 +14,12 @@ namespace ControleDeCinema.Infra.ModuloSala
         {
             return dbContext.Salas;
         }
+
+        public List<Sala> Filtrar(Func<Sala, bool> predicate)
+        {
+            return ObterRegistros()
+                .Where(predicate)
+                .ToList(); 
+        }
     }
 }

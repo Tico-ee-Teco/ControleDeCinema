@@ -6,12 +6,14 @@ using ControleDeCinema.Infra.Compartilhado;
 using ControleDeCinema.Infra.ModuloSessao;
 using ControleDeCinema.WebApp.Extensions;
 using ControleDeCinema.WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 
 namespace ControleDeCinema.WebApp.Controllers
 {
+    
     public class SessaoController : Controller
     {
         private readonly IRepositorioSessao repositorioSessao;
@@ -31,6 +33,8 @@ namespace ControleDeCinema.WebApp.Controllers
             this.repositorioFilme = repositorioFilme;
             this.repositorioGenero = repositorioGenero;
         }
+
+        [Authorize(Roles = "Empresa")]
         public IActionResult Listar()
         {
             var sessoes = repositorioSessao.ObterSessoesAgrupadas();
@@ -53,6 +57,7 @@ namespace ControleDeCinema.WebApp.Controllers
             return View(listaSessaoVm);
         }
 
+        [Authorize(Roles = "Empresa")]
         public IActionResult Inserir()
         {
             var filmes = repositorioFilme.SelecionarTodos();
@@ -75,6 +80,7 @@ namespace ControleDeCinema.WebApp.Controllers
             return RedirectToAction(nameof(Listar));
         }
 
+        [Authorize(Roles = "Empresa")]
         [HttpPost]
         public IActionResult Inserir(InserirSessaoViewModel inserirSessaoVm)
         {
@@ -96,6 +102,7 @@ namespace ControleDeCinema.WebApp.Controllers
             return RedirectToAction(nameof(Listar));
         }
 
+        [Authorize(Roles = "Empresa")]
         public IActionResult Editar(int id)
         {
             var sessao = repositorioSessao.SelecionarPorId(id);
@@ -126,6 +133,7 @@ namespace ControleDeCinema.WebApp.Controllers
             return View(editarSessaoVm);
         }
 
+        [Authorize(Roles = "Empresa")]
         [HttpPost]
         public IActionResult Editar(EditarSessaoViewModel editarSessaoVm)
         {
@@ -149,6 +157,7 @@ namespace ControleDeCinema.WebApp.Controllers
             return RedirectToAction(nameof(Listar));
         }
 
+        [Authorize(Roles = "Empresa")]
         public IActionResult Excluir(int id)
         {
             var sessao = repositorioSessao.SelecionarPorId(id);
@@ -167,6 +176,7 @@ namespace ControleDeCinema.WebApp.Controllers
             return View(excluirSessaoVm);
         }
 
+        [Authorize(Roles = "Empresa")]
         [HttpPost]
         public IActionResult ExcluirConfirmado(DetalhesSessaoViewModel detalhesSessaoVm)
         {
@@ -185,6 +195,7 @@ namespace ControleDeCinema.WebApp.Controllers
             return RedirectToAction(nameof(Listar));
         }
 
+        [Authorize(Roles = "Empresa, Cliente")]
         public IActionResult Detalhes(int id)
         {
             var sessao = repositorioSessao.SelecionarPorId(id);
@@ -204,6 +215,7 @@ namespace ControleDeCinema.WebApp.Controllers
             return View(detalhesSessaoVm);
         }
 
+        [Authorize(Roles = "Empresa, Cliente")]
         public ViewResult Ingresso(int id)
         {
             var db = new ControleDeCinemaDbContext();

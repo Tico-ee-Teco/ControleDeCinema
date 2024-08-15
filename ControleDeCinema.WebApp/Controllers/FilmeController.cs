@@ -1,20 +1,28 @@
 ﻿using ControleDeCinema.Dominio.ModuloFilme;
-using ControleDeCinema.Infra.Compartilhado;
-using ControleDeCinema.Infra.ModuloFilme;
-using ControleDeCinema.Infra.ModuloGenero;
+using ControleDeCinema.Dominio.ModuloGenero;
+using ControleDeCinema.WebApp.Extensions;
 using ControleDeCinema.WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ControleDeCinema.WebApp.Controllers
 {
+    [Authorize(Roles = "Empresa")]
     public class FilmeController : Controller
     {
-        public ViewResult Listar()
-        {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioFilme = new RepositorioFilmeEmOrm(db);
+        private readonly IRepositorioFilme repositorioFilme;
+        private readonly IRepositorioGenero repositorioGenero;
 
+        public FilmeController(IRepositorioFilme repositorioFilme, IRepositorioGenero repositorioGenero)
+        {
+            this.repositorioFilme = repositorioFilme;
+            this.repositorioGenero = repositorioGenero;
+        }
+
+        //[AllowAnonymous] //libera a rota para qualquer usuário
+        public IActionResult Listar()
+        {
             var filmes = repositorioFilme.SelecionarTodos();
 
             var listarFilmesVm = filmes
@@ -27,14 +35,13 @@ namespace ControleDeCinema.WebApp.Controllers
                     Estreia = f.Estreia,
                 });
 
+            ViewBag.Mensagem = TempData.DesserializarMensagemViewModel();
+
             return View(listarFilmesVm);
         }
 
-        public ViewResult Inserir()
+        public IActionResult Inserir()
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioGenero = new RepositorioGeneroEmOrm(db);
-
             var generosDeFilme = repositorioGenero.SelecionarTodos();
 
             var inserirFilmeVm = new InserirFilmeViewModel
@@ -47,16 +54,12 @@ namespace ControleDeCinema.WebApp.Controllers
                     })
             };
 
-            return View(inserirFilmeVm);
+            return RedirectToAction(nameof(Listar));
         }
 
         [HttpPost]
-        public ViewResult Inserir(InserirFilmeViewModel inserirFilmeVm)
+        public IActionResult Inserir(InserirFilmeViewModel inserirFilmeVm)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioFilme = new RepositorioFilmeEmOrm(db);
-            var repositorioGenero = new RepositorioGeneroEmOrm(db);
-
             var genero = repositorioGenero.SelecionarPorId(inserirFilmeVm.IdGenero);
 
             var filme = new Filme(inserirFilmeVm.Nome, genero, inserirFilmeVm.Duracao, inserirFilmeVm.Estreia);
@@ -65,21 +68,17 @@ namespace ControleDeCinema.WebApp.Controllers
 
             HttpContext.Response.StatusCode = 201;
 
-            var notificacaoVm = new NotificacaoViewModel
+            TempData.SerializarMensagemViewModel(new MensagemViewModel()
             {
-                Mensagem = $"O registro com o ID [{filme.Id}] foi cadastrado com sucesso!",
-                LinkRedirecionamento = "/filme/listar"
-            };
+                Titulo = "Sucesso",
+                Mensagem = $"O registro ID [{filme.Id}] foi inserido com sucesso!"
+            });
 
-            return View("mensagens", notificacaoVm);
+            return RedirectToAction(nameof(Listar));
         }
 
-        public ViewResult Editar(int id)
+        public IActionResult Editar(int id)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioFilme = new RepositorioFilmeEmOrm(db);
-            var repositorioGenero = new RepositorioGeneroEmOrm(db);
-
             var filme = repositorioFilme.SelecionarPorId(id);
             var generosDeFilme = repositorioGenero.SelecionarTodos();
 
@@ -98,16 +97,12 @@ namespace ControleDeCinema.WebApp.Controllers
                     })
             };
 
-            return View(editarFilmeVm);
+            return RedirectToAction(nameof(Listar));
         }
 
         [HttpPost]
-        public ViewResult Editar(EditarFilmeViewModel editarFilmeVm)
+        public IActionResult Editar(EditarFilmeViewModel editarFilmeVm)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioFilme = new RepositorioFilmeEmOrm(db);
-            var repositorioGenero = new RepositorioGeneroEmOrm(db);
-
             var genero = repositorioGenero.SelecionarPorId(editarFilmeVm.IdGenero);
 
             var filme = new Filme(editarFilmeVm.Nome, genero, editarFilmeVm.Duracao, editarFilmeVm.Estreia);
@@ -116,21 +111,17 @@ namespace ControleDeCinema.WebApp.Controllers
 
             HttpContext.Response.StatusCode = 200;
 
-            var notificacaoVm = new NotificacaoViewModel
+            TempData.SerializarMensagemViewModel(new MensagemViewModel()
             {
-                Mensagem = $"O registro com o ID [{filme.Id}] foi atualizado com sucesso!",
-                LinkRedirecionamento = "/filme/listar"
-            };
+                Titulo = "Sucesso",
+                Mensagem = $"O registro ID [{filme.Id}] foi editado com sucesso!"
+            });
 
-            return View("mensagens", notificacaoVm);
+            return RedirectToAction(nameof(Listar));
         }
 
-        public ViewResult Excluir(int id)
+        public IActionResult Excluir(int id)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioFilme = new RepositorioFilmeEmOrm(db);
-            var repositorioGenero = new RepositorioGeneroEmOrm(db);
-
             var filme = repositorioFilme.SelecionarPorId(id);
             var genero = repositorioGenero.SelecionarPorId(filme.Genero.Id);
 
@@ -143,28 +134,25 @@ namespace ControleDeCinema.WebApp.Controllers
                 Estreia = filme.Estreia
             };
 
-            return View(excluirFilmeVm);
+            return RedirectToAction(nameof(Listar));
         }
 
-        [HttpPost, ActionName("excluir")]
-        public ViewResult ExcluirConfirmado(ExcluirFilmeViewModel excluirFilmeVm)
+        [HttpPost]
+        public IActionResult ExcluirConfirmado(ExcluirFilmeViewModel excluirFilmeVm)
         {
-            var db = new ControleDeCinemaDbContext();
-            var repositorioFilme = new RepositorioFilmeEmOrm(db);
-
             var filme = repositorioFilme.SelecionarPorId(excluirFilmeVm.Id);
 
             repositorioFilme.Excluir(filme);
 
             HttpContext.Response.StatusCode = 200;
 
-            var notificacaoVm = new NotificacaoViewModel
+            TempData.SerializarMensagemViewModel(new MensagemViewModel()
             {
-                Mensagem = $"O registro com o ID [{filme.Id}] foi excluído com sucesso!",
-                LinkRedirecionamento = "/filme/listar"
-            };
+                Titulo = "Sucesso",
+                Mensagem = $"O registro ID [{filme.Id}] foi excluido com sucesso!"
+            });
 
-            return View("mensagens", notificacaoVm);
+            return RedirectToAction(nameof(Listar));
         }
         
     }
