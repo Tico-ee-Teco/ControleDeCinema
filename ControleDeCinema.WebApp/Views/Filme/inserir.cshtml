@@ -9,8 +9,8 @@
         <form asp-action="Inserir">
             <div class="mt-2">
                 <label class="control-label">Filme:</label>
-                <input class="form-control" asp-for="Nome" />
-                <span class="text-danger my-1" asp-validation-for="Nome"></span>
+                <input class="form-control" asp-for="Titulo" />
+                <span class="text-danger my-1" asp-validation-for="Titulo"></span>
             </div>
 
             <div class="mt-2">
@@ -26,9 +26,18 @@
                 <input class="form-control" type="number" asp-for="Duracao" />
                 <span class="text-danger my-1" asp-validation-for="Duracao"></span>
             </div>
+            
+            <div class="form-check">
+                <input class="form-check-input mb-1" type="checkbox" asp-for="Lancamento"/>
+                <label class="form-check-label fw-semibold mb-1">É Lançamento?</label>
+                <span class="text-danger fs-6" asp-validation-for="Lancamento"></span>
+            </div>
 
             <div class="mt-2">
-                <button class="btn btn-primary">Gravar</button>
+                <button class="btn btn-primary">
+                    <i class="bi bi-floppy-fill me-1"></i>
+                    Gravar
+                </button>
                 <a href="/filme/listar" class="btn btn-info">Voltar</a>
             </div>
         </form>

@@ -37,7 +37,7 @@ namespace ControleDeCinema.WebApp.Controllers
         [HttpPost]
         public IActionResult Inserir(InserirFuncionarioViewModel inserirFuncionarioVm)
         {
-            var funcionario = new Funcionario(inserirFuncionarioVm.Nome, inserirFuncionarioVm.Cpf, inserirFuncionarioVm.Login, inserirFuncionarioVm.Senha);
+            var funcionario = new Funcionario(inserirFuncionarioVm.Nome, inserirFuncionarioVm.Login, inserirFuncionarioVm.Senha);
 
             repositorioFuncionario.Inserir(funcionario);
 
@@ -60,12 +60,9 @@ namespace ControleDeCinema.WebApp.Controllers
             {
                 Id = funcionario.Id,
                 Nome = funcionario.Nome,
-                Cpf = funcionario.CPF,
-                Login = funcionario.Login,
-                Senha = funcionario.Senha
             };
 
-            return RedirectToAction(nameof(Listar));
+            return View(editarFuncionarioVm);
         }
 
         [HttpPost]
@@ -74,9 +71,6 @@ namespace ControleDeCinema.WebApp.Controllers
             var funcionarioOriginal = repositorioFuncionario.SelecionarPorId(editarFuncionarioVm.Id);
 
             funcionarioOriginal.Nome = editarFuncionarioVm.Nome;
-            funcionarioOriginal.CPF = editarFuncionarioVm.Cpf;
-            funcionarioOriginal.Login = editarFuncionarioVm.Login;
-            funcionarioOriginal.Senha = editarFuncionarioVm.Senha;
 
             repositorioFuncionario.Editar(funcionarioOriginal);
 
@@ -93,22 +87,19 @@ namespace ControleDeCinema.WebApp.Controllers
         {
             var funcionario = repositorioFuncionario.SelecionarPorId(id);
 
-            var excluirFuncionarioVm = new ExcluirFuncionarioViewModel()
+            var detalhesFuncionarioviewModel = new DetalhesFuncionarioViewModel()
             {
                 Id = funcionario.Id,
                 Nome = funcionario.Nome,
-                Cpf = funcionario.CPF,
-                Login = funcionario.Login,
-                Senha = funcionario.Senha
             };
 
-            return RedirectToAction(nameof(Listar));
+            return View(detalhesFuncionarioviewModel);
         }
         
         [HttpPost]
-        public IActionResult Excluirconfirmado(ExcluirFuncionarioViewModel excluirFuncionarioVm)
+        public IActionResult Excluir(DetalhesFuncionarioViewModel detalhesFuncionarioVm)
         {
-            var funcionario = repositorioFuncionario.SelecionarPorId(excluirFuncionarioVm.Id);
+            var funcionario = repositorioFuncionario.SelecionarPorId(detalhesFuncionarioVm.Id);
 
             repositorioFuncionario.Excluir(funcionario);
 

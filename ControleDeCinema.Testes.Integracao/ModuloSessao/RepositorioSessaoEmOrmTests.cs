@@ -41,14 +41,14 @@ namespace ControleDeCinema.Testes.Integracao.ModuloSessao
         public void Deve_Inserir_Sessao()
         {
             Genero genero = new Genero("Ação");
-            Filme filme = new Filme("Vingadores", genero, 120, false);
+            Filme filme = new Filme("Vingadores", 120, genero,  false);
             Sala sala = new Sala(1, 10);
 
             repositorioGenero.Inserir(genero);
             repositorioFilme.Inserir(filme);
             repositorioSala.Inserir(sala);
 
-            Sessao sessao = new Sessao(10, DateTime.Now, sala, filme);
+            Sessao sessao = new Sessao(filme, sala, 10, DateTime.Now );
 
             repositorioSessao.Inserir(sessao);
 
@@ -66,14 +66,14 @@ namespace ControleDeCinema.Testes.Integracao.ModuloSessao
         public void Deve_Editar_Sessao()
         {
             Genero genero = new Genero("Ação");
-            Filme filme = new Filme("Vingadores", genero, 120, false);
+            Filme filme = new Filme("Vingadores", 120, genero,  false);
             Sala sala = new Sala(1, 10);
 
             repositorioGenero.Inserir(genero);
             repositorioFilme.Inserir(filme);
             repositorioSala.Inserir(sala);
 
-            Sessao sessao = new Sessao(10, DateTime.Now, sala, filme);
+            Sessao sessao = new Sessao(filme, sala, 10, DateTime.Now );
 
             repositorioSessao.Inserir(sessao);
 
@@ -98,14 +98,14 @@ namespace ControleDeCinema.Testes.Integracao.ModuloSessao
         public void Deve_Excluir_Sessao()
         {
             Genero genero = new Genero("Ação");
-            Filme filme = new Filme("Vingadores", genero, 120, false);
+            Filme filme = new Filme("Vingadores",  120, genero, false);
             Sala sala = new Sala(1, 10);
 
             repositorioGenero.Inserir(genero);
             repositorioFilme.Inserir(filme);
             repositorioSala.Inserir(sala);
 
-            Sessao sessao = new Sessao(10, DateTime.Now, sala, filme);
+            Sessao sessao = new Sessao(filme, sala, 10, DateTime.Now );
 
             repositorioSessao.Inserir(sessao);
 
@@ -115,7 +115,6 @@ namespace ControleDeCinema.Testes.Integracao.ModuloSessao
 
             Assert.IsNull(sessaoExcluida);
         }
-
 
     }
 }

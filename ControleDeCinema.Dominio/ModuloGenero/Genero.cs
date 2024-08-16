@@ -5,29 +5,29 @@ namespace ControleDeCinema.Dominio.ModuloGenero;
 
 public class Genero : EntidadeBase
 {
-    public string Nome { get; set; }
+    public string Descricao { get; set; }
     public List<Filme> Filmes { get; set; }
 
     public Genero()
     {
-        Filmes = new List<Filme>();
+        
     }
-    public Genero(string nome) : this()
+    public Genero(string descricao)
     {
-        Nome = nome;
+        Descricao = descricao;
     }
     public override void AtualizarInformacoes(EntidadeBase registroAtualizado)
     {
         Genero generoAtualizado = (Genero)registroAtualizado;
 
-        Nome = generoAtualizado.Nome;
+        Descricao = generoAtualizado.Descricao;
     }
 
     public override List<string> Validar()
     {
         List<string> erros = new List<string>();
 
-        if (string.IsNullOrEmpty(Nome.Trim()))
+        if (string.IsNullOrEmpty(Descricao.Trim()))
             erros.Add("O campo \"Genero\" é obrigatório!");
 
 
@@ -36,6 +36,6 @@ public class Genero : EntidadeBase
 
     public override string ToString()
     {
-        return Nome;
+        return Descricao;
     }
 }

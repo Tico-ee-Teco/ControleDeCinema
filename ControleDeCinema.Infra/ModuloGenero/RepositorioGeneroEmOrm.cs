@@ -54,7 +54,9 @@ namespace ControleDeCinema.Infra.ModuloGenero
 
         public List<Genero> Filtrar(Func<Genero, bool> predicate)
         {
-            throw new NotImplementedException();
+            return dbContext.Generos
+                .Where(predicate)
+                .ToList();
         }
     }
 }

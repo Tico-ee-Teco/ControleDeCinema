@@ -14,12 +14,6 @@
             </div>
 
             <div class="mt-2">
-                <label class="control-label">Cpf:</label>
-                <input class="form-control" asp-for="Cpf" />
-                <span class="text-danger my-1" asp-validation-for="Cpf"></span>
-            </div>
-
-            <div class="mt-2">
                 <label class="control-label">Login:</label> 
                 <input class="form-control" asp-for="Login" />
                 <span class="text-danger my-1" asp-validation-for="Login"></span>
@@ -32,7 +26,10 @@
             </div>
 
             <div class="mt-2">
-                <button class="btn btn-primary">Gravar</button>
+                <button class="btn btn-primary">
+                    <i class="bi bi-floppy-fill me-1"></i>
+                    Gravar
+                </button>
                 <a href="/filme/listar" class="btn btn-info">Voltar</a>
             </div>
         </form>

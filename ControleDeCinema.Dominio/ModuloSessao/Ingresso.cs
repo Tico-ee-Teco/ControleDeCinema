@@ -6,7 +6,6 @@ namespace ControleDeCinema.Dominio.ModuloSessao
     {
         public int NumeroAssento { get; set; }
         public bool MeiaEntrada { get; set; }
-
         public Sessao Sessao { get; set; }
 
         public Ingresso() { }

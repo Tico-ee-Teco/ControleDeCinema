@@ -9,7 +9,7 @@ namespace ControleDeCinema.Dominio.ModuloFilme
         public string Titulo { get; set; }
         public Genero Genero { get; set; }
         public int Duracao { get; set; }
-        public bool Estreia { get; set; }
+        public bool Lancamento { get; set; }
         public List<Sessao> Sessoes;
 
         public Filme()
@@ -17,12 +17,12 @@ namespace ControleDeCinema.Dominio.ModuloFilme
             Sessoes = new List<Sessao>();
         }
 
-        public Filme(string titulo, Genero genero, int duracao, bool estreia) : this()
+        public Filme(string titulo, int duracao, Genero genero, bool estreia) : this()
         {
             Titulo = titulo;
             Genero = genero;
             Duracao = duracao;
-            Estreia = estreia;
+            Lancamento = estreia;
         }
         public override void AtualizarInformacoes(EntidadeBase registroAtualizado)
         {

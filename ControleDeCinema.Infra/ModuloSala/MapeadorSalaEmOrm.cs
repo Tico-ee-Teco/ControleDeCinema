@@ -33,7 +33,7 @@ public class MapeadorSalaEmOrm : IEntityTypeConfiguration<Sala>
             .IsRequired()
             .OnDelete(DeleteBehavior.NoAction);
 
-        //fBuilder.HasData(ObterRegistrosPadrao());
+        //sBuilder.HasData(ObterRegistrosPadrao());
     }
 
     //criando dados para iniciar o projeto com a tabela populada

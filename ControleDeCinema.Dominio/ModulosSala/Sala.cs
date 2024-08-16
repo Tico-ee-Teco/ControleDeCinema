@@ -7,13 +7,12 @@ namespace ControleDeCinema.Dominio.ModulosSala
     {
         public int Numero { get; set; }
         public int Capacidade { get; set;}
-        public List<Sessao> Sessoes { get; set; } // Lista de sessões que ocorrem na sala
+       
 
-        public Sala()
-        {
-            Sessoes = new List<Sessao>();
+        public Sala() {
+           
         }
-        public Sala(int numero, int capacidade) : this ()
+        public Sala(int numero, int capacidade)
         {
             Numero = numero;
             Capacidade = capacidade;

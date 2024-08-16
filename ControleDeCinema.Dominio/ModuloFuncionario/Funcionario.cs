@@ -6,23 +6,20 @@ namespace ControleDeCinema.Dominio;
 public class Funcionario : EntidadeBase
 {
     public string Nome { get; set; }
-    public string CPF { get; set; }
     public string Login { get; set; }
     public string Senha { get; set; }
-
-    public List<Ingresso> Ingressos { get; set; }
+  
 
     public Funcionario()
     {
-        Ingressos = new List<Ingresso>();
+       
     }
 
-    public Funcionario(string nome, string cpf, string login, string senha) : this()
+    public Funcionario( string login, string senha, string nome)
     {
-        Nome = nome;
-        CPF = cpf;
         Login = login;
         Senha = senha;
+        Nome = nome;
     }
 
     public override void AtualizarInformacoes(EntidadeBase registroAtualizado)
@@ -30,7 +27,6 @@ public class Funcionario : EntidadeBase
         Funcionario funcionarioAtualizado = (Funcionario)registroAtualizado;
 
         Nome = funcionarioAtualizado.Nome;
-        CPF = funcionarioAtualizado.CPF;
         Login = funcionarioAtualizado.Login;
         Senha = funcionarioAtualizado.Senha;
     }
@@ -41,9 +37,6 @@ public class Funcionario : EntidadeBase
         
         if(string.IsNullOrEmpty(Nome.Trim()))
             erros.Add("O campo \"Nome\" é obrigatório");
-        
-        if(string.IsNullOrEmpty(CPF.Trim()))
-            erros.Add("O campo \"Cpf\" é obrigatório");
         
         if(string.IsNullOrEmpty(Login.Trim()))
             erros.Add("O campo \"Login\" é obrigatório");

@@ -18,10 +18,6 @@ public class MapeadorFuncionarioEmOrm : IEntityTypeConfiguration<Funcionario>
             .IsRequired()
             .HasColumnType("varchar(200)");
 
-        fuBuilder.Property(f => f.CPF)
-            .IsRequired()
-            .HasColumnType("varchar(11)");
-
         fuBuilder.Property(f => f.Login)
             .IsRequired()
             .HasColumnType("varchar(200)");
@@ -41,7 +37,7 @@ public class MapeadorFuncionarioEmOrm : IEntityTypeConfiguration<Funcionario>
             .IsRequired()
             .OnDelete(DeleteBehavior.NoAction);
 
-        //fBuilder.HasData(ObterRegistrosPadrao());
+        //fuBuilder.HasData(ObterRegistrosPadrao());
     }
 
     //populando dados no banco
@@ -53,7 +49,6 @@ public class MapeadorFuncionarioEmOrm : IEntityTypeConfiguration<Funcionario>
             {
                 Id = 1,
                 Nome = "Caio Tanaka",
-                CPF = "12345678900",
                 Login = "c.tanaka",
                 Senha = "sFQZT5W2kK8BUAO8uhhQ"
             },
@@ -61,7 +56,6 @@ public class MapeadorFuncionarioEmOrm : IEntityTypeConfiguration<Funcionario>
             {
                 Id = 2,
                 Nome = "Júnior Teixeira",
-                CPF = "98765432100",
                 Login = "junior.teixeira201",
                 Senha = "eNsoNQxmzglCOs3OK76a"
             },
@@ -69,7 +63,6 @@ public class MapeadorFuncionarioEmOrm : IEntityTypeConfiguration<Funcionario>
             {
                 Id = 3,
                 Nome = "Márcia Silva",
-                CPF = "45678912300",
                 Login = "marcia.silva0306",
                 Senha = "AW6m9OHzgB28v4ZNS5jY"
             }

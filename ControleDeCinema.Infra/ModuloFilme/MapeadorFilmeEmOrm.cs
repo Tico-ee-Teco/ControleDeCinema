@@ -23,7 +23,7 @@ public class MapeadorFilmeEmOrm : IEntityTypeConfiguration<Filme>
             .IsRequired()
             .HasColumnType("int");
 
-        fBuilder.Property(f => f.Estreia)
+        fBuilder.Property(f => f.Lancamento)
             .IsRequired()
             .HasColumnType("bit");
 
@@ -58,8 +58,7 @@ public class MapeadorFilmeEmOrm : IEntityTypeConfiguration<Filme>
                 Titulo = "Aladdin",
                 Duracao = 90,
                 Lancamento = false,
-                Genero_Id = 2,
-                Estreia = false
+                Genero_Id = 2
             },
             new
             {
@@ -67,8 +66,7 @@ public class MapeadorFilmeEmOrm : IEntityTypeConfiguration<Filme>
                 Titulo = "Wolverine vs. Deadpool",
                 Duracao = 127,
                 Lancamento = true,
-                Genero_Id = 1,
-                Estreia = true
+                Genero_Id = 1
             },
         ];
     }

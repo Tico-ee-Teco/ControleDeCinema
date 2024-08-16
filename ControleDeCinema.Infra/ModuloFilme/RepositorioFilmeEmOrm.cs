@@ -46,14 +46,14 @@ namespace ControleDeCinema.Infra.ModuloFilme
            return true;
        }
 
-       public Filme SelecionarPorId(int id)
+       public override Filme? SelecionarPorId(int id)
        {
            return dbContext.Filmes
                .Include(f => f.Genero)
                .FirstOrDefault(F => F.Id == id);
        }
 
-       public List<Filme> SelecionarTodos()
+       public override List<Filme> SelecionarTodos()
        {
            return dbContext.Filmes
                .Include(f => f.Genero)
@@ -62,7 +62,10 @@ namespace ControleDeCinema.Infra.ModuloFilme
 
        public List<Filme> Filtrar(Func<Filme, bool> predicate)
        {
-           throw new NotImplementedException();
-       }
+          return dbContext.Filmes
+              .Include(f => f.Genero)
+              .Where(predicate)
+              .ToList();
+        }
     }
 }

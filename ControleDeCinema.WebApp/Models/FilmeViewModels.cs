@@ -8,8 +8,8 @@ namespace ControleDeCinema.WebApp.Models
         public int Id { get; set; }
         public string Titulo { get; set; }
         public string Genero { get; set; }
-        public int Duracao { get; set; }
-        public bool Lancamento { get; set; }
+        public string Duracao { get; set; }
+        public string Lancamento { get; set; }
 
     }
 
@@ -50,7 +50,7 @@ namespace ControleDeCinema.WebApp.Models
         public int Id { get; set; }
         public string Titulo { get; set; }
         public string Genero { get; set; }
-        public int Duracao { get; set; }
-        public bool Lancamento { get; set; }
+        public string Duracao { get; set; }
+        public string Lancamento { get; set; }
     }
 }

@@ -2,8 +2,6 @@
 using ControleDeCinema.Dominio.ModuloGenero;
 using ControleDeCinema.Dominio.ModuloSessao;
 using ControleDeCinema.Dominio.ModulosSala;
-using ControleDeCinema.Infra.Compartilhado;
-using ControleDeCinema.Infra.ModuloSessao;
 using ControleDeCinema.WebApp.Extensions;
 using ControleDeCinema.WebApp.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -13,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ControleDeCinema.WebApp.Controllers
 {
-    
+
     public class SessaoController : Controller
     {
         private readonly IRepositorioSessao repositorioSessao;
@@ -148,7 +146,7 @@ namespace ControleDeCinema.WebApp.Controllers
             var sessao = repositorioSessao.SelecionarPorId(id);
 
             if(sessao is null)
-                return MensagemRegistroNaoEncontrado(sessao);
+                return MensagemRegistroNaoEncontrado(id);
 
             var detalhesSessaoVm = MapearDetalhesSessao(sessao);
 
@@ -191,13 +189,13 @@ namespace ControleDeCinema.WebApp.Controllers
         }
 
         [Authorize(Roles = "Empresa, Cliente")]
-        [HttpGet, Route("/sessao/comprar-ingresso/{sessaoId;int}")]
-        public ViewResult Ingresso(int id)
+        [HttpGet, Route("/sessao/comprar-ingresso/{sessaoId:int}")]
+        public IActionResult Ingresso(int sessaoId)
         {
             var sessao = repositorioSessao.SelecionarPorId(sessaoId);
 
             if(sessao is null)
-                return MensagemRegistroNaoEncontrado(sessaoId);
+               return MensagemRegistroNaoEncontrado(sessaoId);
 
             var detalhesSessaoVm = MapearDetalhesSessao(sessao);
 
@@ -212,7 +210,7 @@ namespace ControleDeCinema.WebApp.Controllers
         }
 
         [Authorize(Roles = "Empresa, Cliente")]
-        [HttpPost, Route("/sessao/comprar-ingresso/{sessaoId;int}")]
+        [HttpPost, Route("/sessao/comprar-ingresso/{sessaoId:int}")]
         public IActionResult Ingresso(int sessaoId, VendaIngressoViewModel vendaIngressoVm)
         {
             var sessao = repositorioSessao.SelecionarPorId(sessaoId);
@@ -221,8 +219,8 @@ namespace ControleDeCinema.WebApp.Controllers
                 return MensagemRegistroNaoEncontrado(sessaoId);
 
             var novoIngresso = sessao.GerarIngresso(
-                comprarIngressoVm.AssentoSelecionado,
-                comprarIngressoVm.MeiaEntrada
+                vendaIngressoVm.AssentoSelecionado,
+                vendaIngressoVm.MeiaEntrada
             );
 
             repositorioSessao.Editar(sessao);
@@ -257,7 +255,7 @@ namespace ControleDeCinema.WebApp.Controllers
                 Data = sessao.Data.ToString("dd/MM/yyyy HH:mm"),
                 Encerrada = sessao.Encerrada ? "Encerrada" : "Disponível",
                 NumeroMaximoIngresso = sessao.NumeroMaximoIngressos,
-                IngressosDisponiveis = sessao.ObterIngressosDisponiveis(),
+                IngressosDisponiveis = sessao.ObterQuantidadeIngressosDisponiveis()
             };
         }
 

@@ -15,7 +15,7 @@ namespace ControleDeCinema.WebApp.Models
 
         [Required(ErrorMessage = "A descrição é obrigatório")]
         [MinLength(6, ErrorMessage = "A descrição deve conter ao menos 6 caracteres")]
-        public string Nome { get; set; }
+        public string Descricao { get; set; }
     }
 
     public class ListarGeneroViewModel

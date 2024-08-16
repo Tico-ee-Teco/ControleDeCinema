@@ -67,7 +67,7 @@ namespace ControleDeCinema.WebApp.Controllers
             var editarGeneroVm = new EditarGeneroViewModel
             {
                 Id = genero.Id,
-                Nome = genero.Nome
+                Descricao = genero.Descricao
             };
 
             return View(editarGeneroVm);

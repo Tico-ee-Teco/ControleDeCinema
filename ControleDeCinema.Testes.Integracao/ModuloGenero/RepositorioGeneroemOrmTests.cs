@@ -44,7 +44,7 @@ public class RepositorioGeneroemOrmTests
 
         Genero generoAtualizado = repositorioGenero.SelecionarPorId(generoOriginal.Id);
 
-        generoAtualizado.Nome = "Terror";
+        generoAtualizado.Descricao = "Terror";
 
         //Act
         bool resultado = repositorioGenero.Editar(generoOriginal, generoAtualizado);

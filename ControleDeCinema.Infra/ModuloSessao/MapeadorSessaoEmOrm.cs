@@ -27,15 +27,13 @@ public class MapeadorSessaoEmOrm : IEntityTypeConfiguration<Sessao>
             .HasColumnType("bit");
 
         sBuilder.HasOne(s => s.Sala)
-            .WithMany(s => s.Sessoes)
+            .WithMany()
             .HasForeignKey("Sala_Id")
-            .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
 
         sBuilder.HasOne(s => s.Filme)
             .WithMany(f => f.Sessoes)
             .HasForeignKey("Filme_Id")
-            .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
 
         sBuilder.HasMany(s => s.Ingressos)
@@ -53,7 +51,7 @@ public class MapeadorSessaoEmOrm : IEntityTypeConfiguration<Sessao>
             .IsRequired()
             .OnDelete(DeleteBehavior.NoAction);
 
-        //fBuilder.HasData(ObterRegistrosPadrao());
+        //sBuilder.HasData(ObterRegistrosPadrao());
     }
 
     //populando a tabela do banco

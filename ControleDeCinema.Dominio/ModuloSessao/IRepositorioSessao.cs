@@ -6,6 +6,9 @@ namespace ControleDeCinema.Dominio.ModuloSessao
     {
         List<IGrouping<string, Sessao>> ObterSessoesAgrupadas();
         List<IGrouping<string, Sessao>> ObterSessoesAgrupadas(int usuarioId);
-        List<IGrouping<string, Sessao>> ObterSessoesDisponiveisAgrupadas();
+        List<Ingresso>SelecionarTodosIngressos(int usuarioSessaoId);
+        List<Ingresso> SelecionarTodosIngressos();
+        List<int> ObterNumerosAssentosOcupados(int sessaoId);
+
     }
 }

@@ -24,7 +24,7 @@ public class RepositorioFuncionarioEmOrmTests
     public void Deve_inserir_um_funcionario()
     {
         //Arrange
-        Funcionario funcionario = new Funcionario("Alice", "12345678900", "123456", "123456");
+        Funcionario funcionario = new Funcionario("Alice",  "123456", "123456");
 
         //Act
         repositorioFuncionario.Inserir(funcionario);
@@ -37,7 +37,7 @@ public class RepositorioFuncionarioEmOrmTests
     public void Deve_editar_um_funcionario()
     {
         //Arrange
-        Funcionario funcionarioOriginal = new Funcionario("Alice", "12345678900", "123456", "123456");
+        Funcionario funcionarioOriginal = new Funcionario("Alice", "123456", "123456");
 
         repositorioFuncionario.Inserir(funcionarioOriginal);
 
@@ -56,7 +56,7 @@ public class RepositorioFuncionarioEmOrmTests
     public void Deve_excluir_um_funcionario()
     {
         //Arrange
-        Funcionario funcionario = new Funcionario("Alice", "12345678900", "123456", "123456");
+        Funcionario funcionario = new Funcionario("Alice", "123456", "123456");
 
         repositorioFuncionario.Inserir(funcionario);
 
@@ -71,7 +71,7 @@ public class RepositorioFuncionarioEmOrmTests
     public void Deve_selecionar_um_funcionario_por_id()
     {
         //Arrange
-        Funcionario funcionario = new Funcionario("Alice", "12345678900", "123456", "123456");
+        Funcionario funcionario = new Funcionario("Alice", "123456", "123456");
 
         repositorioFuncionario.Inserir(funcionario);
 
@@ -88,8 +88,8 @@ public class RepositorioFuncionarioEmOrmTests
         //Arrange
         List<Funcionario> funcinariosParaInserir =
         [
-            new Funcionario("Alice", "12345678900", "123456", "123456"),
-            new Funcionario("Bob", "12345678900", "123456", "123456")
+            new Funcionario("Alice", "123456", "123456"),
+            new Funcionario("Bob", "123456", "123456")
 
         ];
 

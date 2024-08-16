@@ -33,7 +33,7 @@ public class MapeadorIngressoEmOrm : IEntityTypeConfiguration<Ingresso>
             .IsRequired()
             .OnDelete(DeleteBehavior.NoAction);
 
-        //fBuilder.HasData(ObterRegistrosPadrao());
+        //iBuilder.HasData(ObterRegistrosPadrao());
     }
 
     //populando tabela no banco

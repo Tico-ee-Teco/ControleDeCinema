@@ -18,14 +18,43 @@ namespace ControleDeCinema.Dominio.ModuloSessao
             Ingressos = new List<Ingresso>();
         }
 
-        public Sessao(int numeroMaximoIngressos, DateTime data, Sala sala, Filme filme): this()
+        public Sessao(Filme filme, Sala sala, int numeroMaximoIngressos, DateTime data  ): this()
         {
+            Filme = filme;
+            Sala = sala;
             NumeroMaximoIngressos = numeroMaximoIngressos;
             Data = data;
-            Sala = sala;
-            Filme = filme;
         }
-        
+        public int[] ObterAssentosDisponiveis()
+        {
+            var assentosDisponiveis = Enumerable.Range(1, NumeroMaximoIngressos);
+
+            var assentosOcupados = Ingressos.Select(i => i.NumeroAssento).ToArray();
+
+            return assentosDisponiveis
+                .Except(assentosOcupados)
+                .ToArray();
+        }
+
+        public int ObterQuantidadeIngressosDisponiveis()
+        {
+            return NumeroMaximoIngressos - Ingressos.Count;
+        }
+
+        public Ingresso GerarIngresso(int assentoSelecionado, bool meiaEntrada)
+        {
+            var ingresso = new Ingresso(assentoSelecionado, meiaEntrada);
+
+            Ingressos.Add(ingresso);
+
+            return ingresso;
+        }
+
+        public void Encerrar()
+        {
+            Encerrada = true;
+        }
+
 
         public override void AtualizarInformacoes(EntidadeBase registroAtualizado)
         {

@@ -74,6 +74,7 @@ namespace ControleDeCinema.WebApp.Models
     {
         public DetalhesSessaoViewModel Sessao { get; set; }   
         public bool MeiaEntrada { get; set; }
+
         [Required(ErrorMessage = "É obrigatório selecionar um assento!")]
         public int AssentoSelecionado { get; set; }
 

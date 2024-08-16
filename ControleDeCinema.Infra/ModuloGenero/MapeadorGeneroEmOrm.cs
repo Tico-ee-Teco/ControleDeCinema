@@ -15,7 +15,7 @@ public class MapeadorGeneroEmOrm : IEntityTypeConfiguration<Genero>
             .IsRequired()
             .ValueGeneratedOnAdd();
 
-        gBuilder.Property(g => g.Nome)
+        gBuilder.Property(g => g.Descricao)
             .IsRequired()
             .HasColumnType("varchar(50)");
 
@@ -30,7 +30,7 @@ public class MapeadorGeneroEmOrm : IEntityTypeConfiguration<Genero>
             .IsRequired()
             .OnDelete(DeleteBehavior.NoAction);
 
-        //fBuilder.HasData(ObterRegistrosPadrao());
+        //gBuilder.HasData(ObterRegistrosPadrao());
     }
 
     //populando tabela no banco
@@ -38,12 +38,12 @@ public class MapeadorGeneroEmOrm : IEntityTypeConfiguration<Genero>
     {
         return
         [
-            new Genero { Id = 1, Nome = "Ação" },
-            new Genero { Id = 2, Nome = "Animação" },
-            new Genero { Id = 3, Nome = "Aventura" },
-            new Genero { Id = 4, Nome = "Comédia" },
-            new Genero { Id = 5, Nome = "Romance" },
-            new Genero { Id = 6, Nome = "Terror" }
+            new Genero { Id = 1, Descricao = "Ação" },
+            new Genero { Id = 2, Descricao = "Animação" },
+            new Genero { Id = 3, Descricao = "Aventura" },
+            new Genero { Id = 4, Descricao = "Comédia" },
+            new Genero { Id = 5, Descricao = "Romance" },
+            new Genero { Id = 6, Descricao = "Terror" }
         ];
     }
 }
