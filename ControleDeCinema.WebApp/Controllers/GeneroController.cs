@@ -23,7 +23,7 @@ namespace ControleDeCinema.WebApp.Controllers
                 .Select(g => new ListarGeneroViewModel
                 {
                     Id = g.Id,
-                    Nome = g.Nome
+                    Descricao = g.Descricao
                 });
 
             ViewBag.Mensagem = TempData.DesserializarMensagemViewModel();
@@ -33,19 +33,25 @@ namespace ControleDeCinema.WebApp.Controllers
 
         public IActionResult Inserir()
         {
-            return RedirectToAction(nameof(Listar));
+            return View();
         }
 
         [HttpPost]
         public IActionResult Inserir(InserirGeneroViewModel inserirGeneroVm)
         {
-            var genero = new Genero(inserirGeneroVm.Nome);
+            if(!ModelState.IsValid)
+                return View(inserirGeneroVm);
+
+            var genero = new Genero()
+            {
+                Descricao = inserirGeneroVm.Descricao
+            };
 
             repositorioGenero.Inserir(genero);
 
             HttpContext.Response.StatusCode = 201;
 
-            TempData.SerializarMensagemViewModel(new MensagemViewModel()
+            TempData.SerializarMensagemViewModel(new MensagemViewModel
             {
                 Titulo = "Sucesso",
                 Mensagem = $"O registro ID [{genero.Id}] foi inserido com sucesso!"
@@ -64,24 +70,27 @@ namespace ControleDeCinema.WebApp.Controllers
                 Nome = genero.Nome
             };
 
-            return RedirectToAction(nameof(Listar));
+            return View(editarGeneroVm);
         }
 
         [HttpPost]
         public IActionResult Editar(EditarGeneroViewModel editarGeneroVm)
         {
-            var generoOriginal = repositorioGenero.SelecionarPorId(editarGeneroVm.Id);
+            if(!ModelState.IsValid)
+                return View(editarGeneroVm);
 
-            generoOriginal.Nome = editarGeneroVm.Nome;
+            var genero = repositorioGenero.SelecionarPorId(editarGeneroVm.Id);
 
-            repositorioGenero.Editar(generoOriginal);
+            genero!.Descricao = editarGeneroVm.Descricao;
+
+            repositorioGenero.Editar(genero);
 
             HttpContext.Response.StatusCode = 200;
 
             TempData.SerializarMensagemViewModel(new MensagemViewModel()
             {
                 Titulo = "Sucesso",
-                Mensagem = $"O registro ID [{generoOriginal.Id}] foi editado com sucesso!"
+                Mensagem = $"O registro ID [{genero.Id}] foi editado com sucesso!"
             });
 
             return RedirectToAction(nameof(Listar));
@@ -91,21 +100,26 @@ namespace ControleDeCinema.WebApp.Controllers
         {
             var genero = repositorioGenero.SelecionarPorId(id);
 
-            var excluirGeneroVm = new ExcluirGeneroViewModel
+            if (genero is null)
+                return MensagemRegistroNaoEncontrado(id);
+
+            var detalhesGeneroViewModel = new DetalhesGeneroViewModel
             {
                 Id = genero.Id,
-                Nome = genero.Nome,
-                Filmes = genero.Filmes
-                    .Select(f => new ListarFilmeGeneroViewModel {Nome = f.Titulo})
+                Descricao = genero.Descricao,
+               
             };
 
-            return RedirectToAction(nameof(Listar));
+            return View(detalhesGeneroViewModel);
         }
 
         [HttpPost]
-        public IActionResult ExcluirConfirmado(int id)
+        public IActionResult Excluir(DetalhesGeneroViewModel detalhesGeneroVm)
         {
-            var genero = repositorioGenero.SelecionarPorId(id);
+            var genero = repositorioGenero.SelecionarPorId(detalhesGeneroVm.Id);
+
+            if(genero is null)
+                return MensagemRegistroNaoEncontrado(detalhesGeneroVm.Id);
 
             repositorioGenero.Excluir(genero);
 
@@ -120,7 +134,34 @@ namespace ControleDeCinema.WebApp.Controllers
             return RedirectToAction(nameof(Listar));
         }
 
-        
+        public IActionResult Detalhes(int id)
+        {
+            var genero = repositorioGenero.SelecionarPorId(id);
+
+            if (genero is null)
+                return MensagemRegistroNaoEncontrado(id);
+
+            var detalhesGeneroViewModel = new DetalhesGeneroViewModel
+            {
+                Id = id,
+                Descricao = genero.Descricao
+            };
+
+            return View(detalhesGeneroViewModel);
+        }
+
+        private IActionResult MensagemRegistroNaoEncontrado(int idRegistro)
+        {
+            TempData.SerializarMensagemViewModel(new MensagemViewModel
+            {
+                Titulo = "Erro",
+                Mensagem = $"Não foi possível encontrar o registro ID [{idRegistro}]!",
+            });
+
+            return RedirectToAction(nameof(Listar));
+        }
+
+
     }
 
   

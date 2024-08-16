@@ -19,7 +19,7 @@ namespace ControleDeCinema.WebApp.Controllers
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
-            this.roleManager = roleManager;
+            this.roleManager = roleManager; 
         }
 
         public IActionResult Registrar()

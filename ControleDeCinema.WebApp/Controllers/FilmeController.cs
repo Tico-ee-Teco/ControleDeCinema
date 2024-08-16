@@ -29,10 +29,10 @@ namespace ControleDeCinema.WebApp.Controllers
                 .Select(f => new ListarFilmeViewModel
                 {
                     Id = f.Id,
-                    Nome = f.Titulo,
+                    Titulo = f.Titulo,
                     Genero = f.Genero.Nome,
-                    Duracao = f.Duracao,
-                    Estreia = f.Estreia,
+                    Duracao = f.Duracao.FormatarEmHorasEMinutos(),
+                    Lancamento = f.Lancamento ? "Lançamento" : "Re-Exibição",
                 });
 
             ViewBag.Mensagem = TempData.DesserializarMensagemViewModel();
@@ -49,20 +49,37 @@ namespace ControleDeCinema.WebApp.Controllers
                 Generos = generosDeFilme
                     .Select(g => new SelectListItem
                     {
-                        Value = g.Id.ToString(),
-                        Text = g.Nome
+                        Id = g.Id,
+                        Descricao = g.Descricao,
                     })
             };
 
-            return RedirectToAction(nameof(Listar));
+            return View(inserirFilmeVm);
         }
 
         [HttpPost]
         public IActionResult Inserir(InserirFilmeViewModel inserirFilmeVm)
         {
-            var genero = repositorioGenero.SelecionarPorId(inserirFilmeVm.IdGenero);
 
-            var filme = new Filme(inserirFilmeVm.Nome, genero, inserirFilmeVm.Duracao, inserirFilmeVm.Estreia);
+            if (!ModelState.IsValid)
+            {
+                var generoDeFilme = repositorioGenero.SelecionarTodos();
+
+                inserirFilmeVm.Generos = generoDeFilme
+                    .Select(g => new SelectListItem(g.Descricao, g.Id.ToString()));
+
+                return View(inserirFilmeVm);
+            }
+            
+            var genero = repositorioGenero.SelecionarPorId(inserirFilmeVm.IdGenero.GetValueOrDefault());
+
+            var filme = new Filme()
+            {
+                Titulo = inserirFilmeVm.Titulo,
+                Lancamento = inserirFilmeVm.Lancamento,
+                Duracao = inserirFilmeVm.Duracao,
+                Genero = genero
+            };
 
             repositorioFilme.Inserir(filme);
 
@@ -80,32 +97,46 @@ namespace ControleDeCinema.WebApp.Controllers
         public IActionResult Editar(int id)
         {
             var filme = repositorioFilme.SelecionarPorId(id);
-            var generosDeFilme = repositorioGenero.SelecionarTodos();
+
+            if (filme is null)
+                return MEnsagemRegistroNaoEncontrado(id);
+
+            var generos = repositorioGenero.SelecionarTodos();
 
             var editarFilmeVm = new EditarFilmeViewModel
             {
                 Id = filme.Id,
-                Nome = filme.Titulo,
-                IdGenero = filme.Genero.Id,
+                Titulo = filme.Titulo,
                 Duracao = filme.Duracao,
-                Estreia = filme.Estreia,
-                Generos = generosDeFilme
-                    .Select(g => new SelectListItem
-                    {
-                        Value = g.Id.ToString(),
-                        Text = g.Nome
-                    })
+                Lancamento = filme.Lancamento,
+                Generos = generos
+                    .Select(g => new SelectListItem(g.Descricao, g.Id.ToString())),
             };
 
-            return RedirectToAction(nameof(Listar));
+            return View(editarFilmeVm);
         }
 
         [HttpPost]
         public IActionResult Editar(EditarFilmeViewModel editarFilmeVm)
         {
-            var genero = repositorioGenero.SelecionarPorId(editarFilmeVm.IdGenero);
+            if(!ModelState.IsValid)
+            {
+                var generos = repositorioGenero.SelecionarTodos();
 
-            var filme = new Filme(editarFilmeVm.Nome, genero, editarFilmeVm.Duracao, editarFilmeVm.Estreia);
+                editarFilmeVm.Generos = generos
+                    .Select(g => new SelectListItem(g.Descricao, g.Id.ToString()));
+
+                return View(editarFilmeVm);
+            }
+
+            var generoSelecionado = repositorioGenero.SelecionarPorId(editarFilmeVm.IdGenero);
+
+            var filme = repositorioFilme.SelecionarPorId(editarFilmeVm.Id);
+
+            filme!.Titulo = editarFilmeVm.Titulo;
+            filme!.Duracao = editarFilmeVm.Duracao;
+            filme!.Lancamento = editarFilmeVm.Lancamento;
+            filme!.Genero = generoSelecionado;
 
             repositorioFilme.Editar(filme);
 
@@ -122,25 +153,30 @@ namespace ControleDeCinema.WebApp.Controllers
 
         public IActionResult Excluir(int id)
         {
-            var filme = repositorioFilme.SelecionarPorId(id);
-            var genero = repositorioGenero.SelecionarPorId(filme.Genero.Id);
+           var filme = repositorioFilme.SelecionarPorId(id);
+           
+           if(filme is null)
+                return MEnsagemRegistroNaoEncontrado(id);
 
-           var excluirFilmeVm = new ExcluirFilmeViewModel
+            var detalhesFilmeViewModel = new DetalhesFilmeViewModel
             {
                 Id = filme.Id,
-                Nome = filme.Titulo,
-                NomeGenero = genero.Nome,
+                Titulo = filme.Titulo,
                 Duracao = filme.Duracao,
-                Estreia = filme.Estreia
+                Lancamento = filme.Lancamento,
+                Genero = filme.Genero.Descricao
             };
 
             return RedirectToAction(nameof(Listar));
         }
 
         [HttpPost]
-        public IActionResult ExcluirConfirmado(ExcluirFilmeViewModel excluirFilmeVm)
+        public IActionResult ExcluirConfirmado(DetalhesFilmeViewModel detalhesFilmeVm)
         {
-            var filme = repositorioFilme.SelecionarPorId(excluirFilmeVm.Id);
+            var filme = repositorioFilme.SelecionarPorId(detalhesFilmeVm.Id);
+
+            if(filme is null)
+                return MEnsagemRegistroNaoEncontrado(detalhesFilmeVm.Id);
 
             repositorioFilme.Excluir(filme);
 
@@ -154,6 +190,36 @@ namespace ControleDeCinema.WebApp.Controllers
 
             return RedirectToAction(nameof(Listar));
         }
-        
+
+        public IActionResult Detalhes(int id)
+        {
+            var filme = repositorioFilme.SelecionarPorId(id);
+
+            if (filme is null)
+                return MensagemRegistroNaoEncontrado(id);
+
+            var detalhesFilmeViewModel = new DetalhesFilmeViewModel
+            {
+                Id = id,
+                Titulo = filme.Titulo,
+                Duracao = filme.Duracao.FormatarEmHorasEMinutos(),
+                Lancamento = filme.Lancamento ? "Lançamento" : "Re-Exibição",
+                Genero = filme.Genero.Descricao
+            };
+
+            return View(detalhesFilmeViewModel);
+        }
+
+        private IActionResult MensagemRegistroNaoEncontrado(int idRegistro)
+        {
+            TempData.SerializarMensagemViewModel(new MensagemViewModel
+            {
+                Titulo = "Erro",
+                Mensagem = $"Não foi possível encontrar o registro ID [{idRegistro}]!"
+            });
+
+            return RedirectToAction(nameof(Listar));
+        }
+
     }
 }

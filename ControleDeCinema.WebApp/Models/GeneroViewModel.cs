@@ -4,33 +4,31 @@ namespace ControleDeCinema.WebApp.Models
 {
     public class InserirGeneroViewModel 
     {
-        [Required(ErrorMessage = "O campo nome é obrigatório")]
-        public string Nome { get; set; }
+        [Required(ErrorMessage = "A descrição é obrigatório")]
+        [MinLength(6, ErrorMessage = "A descrição deve conter ao menos 6 caracteres")]
+        public string Descricao { get; set; }
     }
 
     public class EditarGeneroViewModel
     {
         public int Id { get; set; }
-        public string Nome { get; set; }
-    }
 
-    public class ExcluirGeneroViewModel
-    {
-        public int Id { get; set; }
+        [Required(ErrorMessage = "A descrição é obrigatório")]
+        [MinLength(6, ErrorMessage = "A descrição deve conter ao menos 6 caracteres")]
         public string Nome { get; set; }
-        public IEnumerable<ListarFilmeGeneroViewModel> Filmes { get; set; }
     }
 
     public class ListarGeneroViewModel
     {
         public int Id { get; set; }
-        public string Nome { get; set; }
+        public string Descricao { get; set; }
     }
 
-    public class ListarFilmeGeneroViewModel
+    public class DetalhesGeneroViewModel
     {
-       public string Nome { get; set; }
+        public int Id { get; set; }
+        public string Descricao { get; set; }
     }
 
-   
+
 }
